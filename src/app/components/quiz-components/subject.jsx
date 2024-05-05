@@ -1,9 +1,11 @@
 "use client";
 import { getSubjects } from "@/app/functions/users";
-import React from "react";
+import { ExamContext } from "@/app/generate-quiz/_context";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 function Subject() {
   const [data, setData] = useState([]);
+  const [exam, setExam] = useContext(ExamContext);
   useEffect(() => {
     getSubjects()
       .then((subjects) => {
@@ -13,10 +15,22 @@ function Subject() {
         console.error("Error fetching subjects:", error);
       });
   }, []);
+  const onChange = (e) => {
+    const selectedSource = e.target.value;
+    if (!exam.subjects.includes(selectedSource)) {
+      setExam({ ...exam, subjects: [...exam.subjects, selectedSource] });
+    } else {
+      // If unchecked, remove the selected source from exam.subjects
+      setExam({
+        ...exam,
+        subjects: exam.subjects.filter((subject) => subject !== selectedSource),
+      });
+    }
+  };
   return (
     <div className="subject">
       <div className="grid gap-5 grid-cols-1 lg:grid-cols-4">
-        {data.length > 1 &&
+        {data.length >= 1 &&
           data.map((s, i) => {
             return (
               <label
@@ -30,6 +44,8 @@ function Subject() {
                     type="checkbox"
                     className="size-4 rounded border-gray-300"
                     id={s?.name + i}
+                    value={s?.name}
+                    onChange={onChange}
                   />
                 </div>
                 <div>

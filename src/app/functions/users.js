@@ -22,7 +22,26 @@ export const loginLogic = async (email, password, page = "user") => {
       }
     );
     window.localStorage.setItem("auth", JSON.stringify(data.data));
-    return { status: "success" };
+    return { status: "success", data: data.data };
+  } catch (err) {
+    console.log(err);
+    const errMsg = String(err.response.data.msg);
+    return Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: errMsg,
+      footer: "Try Again, And  If The Problem Persists Contact Support!",
+    });
+  }
+};
+export const register = async (d) => {
+  try {
+    const data = await axios.post(
+      `${process.env.NEXT_PUBLIC_API}/users/regester`,
+      d
+    );
+    window.localStorage.setItem("auth", JSON.stringify(data.data));
+    return { status: "success", data: data.data };
   } catch (err) {
     console.log(err);
     const errMsg = String(err.response.data.msg);
@@ -155,6 +174,18 @@ export const addSource = async (source) => {
     const data = await axios.post(
       `${process.env.NEXT_PUBLIC_API}/admin/add-source`,
       { source }
+    );
+    return { status: "success" };
+  } catch (error) {
+    console.log(error);
+    return { status: "fiald" };
+  }
+};
+
+export const deleteSourceById = async (id) => {
+  try {
+    const data = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API}/admin/source/${id}`
     );
     return { status: "success" };
   } catch (error) {

@@ -1,4 +1,5 @@
 import { Cairo } from "next/font/google";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";

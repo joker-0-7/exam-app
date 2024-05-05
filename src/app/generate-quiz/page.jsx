@@ -1,16 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../components/Switch";
 import { TextField } from "@mui/material";
 import BasicTabs from "../components/Tabs";
+import ButtonComponent from "../utils/Button";
+import { useRouter } from "next/navigation";
+import { ExamContext } from "./_context";
+import { addQuizUser } from "../functions/quizzes";
 
 function Page() {
   const [mode, setMode] = useState("Tutor");
-
+  const [exam, setExam] = useContext(ExamContext);
+  const router = useRouter();
   const handleModeChange = (e) => {
-    setMode(e.target.value);
+    setExam({ ...exam, mode: e.target.value });
   };
-
+  const generate = async () => {
+    console.log(exam);
+    await addQuizUser(exam)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    console.log(exam);
+  }, [exam]);
   return (
     <div className="generate-quiz mt-20">
       <div className="container mx-auto">
@@ -28,7 +43,7 @@ function Page() {
               </h3>
             </div>
             <div className="switch mt-5">
-              <Button mode={mode} handleModeChange={handleModeChange} />
+              <Button mode={exam.mode} handleModeChange={handleModeChange} />
             </div>
             <div className="bg-tertiary text-dark py-6 text-center text-2xl font-bold my-5">
               <h1>Quiz Title</h1>
@@ -46,6 +61,7 @@ function Page() {
               <BasicTabs />
             </div>
           </div>
+          <ButtonComponent title="Generate Quiz" onClick={generate} />
         </div>
       </div>
     </div>

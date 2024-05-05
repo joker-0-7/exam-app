@@ -16,6 +16,7 @@ function Page() {
     e.preventDefault();
     const status = await loginLogic(data.email, data.password, "admin");
     if (status.status === "success") {
+      window.localStorage.setItem("auth", JSON.stringify(status.data));
       router.push("/admin");
     }
   };

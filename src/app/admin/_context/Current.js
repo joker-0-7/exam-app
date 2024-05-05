@@ -17,11 +17,18 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     setState(JSON.parse(window.localStorage.getItem("auth")));
+    if (!state) router.push("/admin/login");
   }, []);
   useEffect(() => {
-    setClient(true);
     if (state?.token) fetchData();
+    setClient(true);
   }, [state?.token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
+  }, []);
 
   const fetchData = async () => {
     try {

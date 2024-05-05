@@ -28,21 +28,21 @@ export default function Home() {
                 {
                   id: 0,
                   value:
-                    state && state.user.totalExam ? state.user.totalExam : 40,
+                    state && state.user.totalExam ? state.user.totalExam : 0,
                   label: "Total Exams",
                 },
                 {
                   id: 1,
                   value:
-                    state && state.user.totalExam
+                    state && state.user.compeleteExams
                       ? state.user.compeleteExams
-                      : 50,
+                      : 0,
                   label: "Complete Exams",
                 },
                 {
                   id: 2,
                   value:
-                    state && state.user.totalExam ? state.user.faildExams : 60,
+                    state && state.user.faildExams ? state.user.faildExams : 0,
                   label: "Faild Exams",
                 },
               ],

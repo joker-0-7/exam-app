@@ -11,7 +11,6 @@ function SideMinu() {
     router.push("/admin/login");
   };
   const activeLink = (name) => {
-    console.log(pathName.split("/"));
     return pathName.split("/")[2] === name;
   };
   return (
