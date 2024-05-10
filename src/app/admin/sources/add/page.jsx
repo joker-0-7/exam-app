@@ -16,7 +16,7 @@ function Page() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await addSource(source);
-    if (data && data.status === "success") router.push("/admin/subjects");
+    if (data && data.status === "success") router.push("/admin/sources");
   };
 
   const handleChange = (e) => {

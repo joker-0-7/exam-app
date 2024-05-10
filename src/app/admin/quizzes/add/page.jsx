@@ -1,74 +1,61 @@
 "use client";
 import React, { useState } from "react";
-import QuizComponent from "../_components/quiz/QuizComponent";
+import QuizComponent from "../../_components/quiz/QuizComponent";
 import ButtonComponent from "@/app/utils/Button";
-import { Button } from "antd";
-import { AppstoreAddOutlined, SearchOutlined } from "@ant-design/icons";
-import axios from "axios";
 import { addQuizzes } from "@/app/functions/quizzes";
 
 function Page() {
-  const [quizzes, setQuizzes] = useState([
-    {
-      sources: [],
-      question: "",
-      answers: [],
-      correct: "",
-      image: "",
-      description: "",
-      subjects: [],
-    },
-  ]);
-  const addQuiz = () => {
-    const newQuiz = {
-      sources: [],
-      question: "",
-      answers: [],
-      correct: "",
-      image: "",
-      description: "",
-      subjects: [],
-    };
-    setQuizzes((prevQuizzes) => prevQuizzes.concat(newQuiz));
-  };
-  const handleChangeAnswer = (e, index, answerIndex) => {
+  const [quizzes, setQuizzes] = useState({
+    sources: [],
+    question: "",
+    answers: [" ", " "],
+    correct: "",
+    image: "",
+    explanation: "",
+    subjects: [],
+  });
+  const [image, setImage] = useState("");
+  const handleChangeAnswer = (e, answerIndex) => {
     const { value } = e.target;
     setQuizzes((prevQuizzes) => {
-      const updatedQuizzes = [...prevQuizzes];
-      updatedQuizzes[index].answers[answerIndex] = value;
+      const updatedQuizzes = { ...prevQuizzes };
+      updatedQuizzes.answers[answerIndex] = value;
       return updatedQuizzes;
     });
   };
+  const uploadFile = (e) => {
+    setImage(e.target.files[0]);
+  };
   const handleSubmit = async (e) => {
-    const data = await addQuizzes(quizzes);
+    let formdata = new FormData();
+    formdata.append("img", image);
+    formdata.append("sources", quizzes.sources);
+    formdata.append("answers", quizzes.answers);
+    formdata.append("correct", quizzes.correct);
+    formdata.append("explanation", quizzes.explanation);
+    formdata.append("subjects", quizzes.subjects);
+    const data = await addQuizzes(formdata);
   };
   return (
     <div className="quizzes h-screen overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center h-screen">
-          <div className="quiz-box max-h-screen overflow-y-scroll">
-            {quizzes.map((quiz, i) => {
-              return (
-                <div key={i}>
-                  <QuizComponent
-                    quizzes={quizzes}
-                    quiz={quiz}
-                    setQuizzes={setQuizzes}
-                    handleChangeAnswer={handleChangeAnswer}
-                    index={i}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <div className="footer flex justify-around items-center w-full">
-            <ButtonComponent title="Submit" onClick={handleSubmit} />
-            <Button
-              onClick={addQuiz}
-              shape="circle"
-              type="primary"
-              icon={<AppstoreAddOutlined style={{ fontSize: "18px" }} />}
-            />
+          <div className="quiz-box max-h-screen w-full sm:w-1/2 ">
+            <div>
+              <QuizComponent
+                quiz={quizzes}
+                setQuizzes={setQuizzes}
+                handleChangeAnswer={handleChangeAnswer}
+                uploadFile={uploadFile}
+              />
+            </div>
+            <div className="footer w-full mt-5">
+              <ButtonComponent
+                title="Submit"
+                onClick={handleSubmit}
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
       </div>

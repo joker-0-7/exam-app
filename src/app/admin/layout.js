@@ -6,12 +6,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
-    <div className="grid grid-cols-12 gap-4 lg:gap-8">
+    <div className="grid min-h-screen w-full grid-cols-[280px_1fr]">
       <UserProvider>
-        <div className="col-span-2">
-          <SideMinu />
-        </div>
-        <div className="h-screen col-span-10">{children}</div>
+        <SideMinu />
+
+        {children}
       </UserProvider>
     </div>
   );

@@ -30,7 +30,7 @@ function Page() {
   return (
     <div className="subjects  h-screen">
       <div className="container flex justify-evenly flex-col h-screen">
-        <Heading title="Subjects" btnValue="Add Subject" link="subject" />
+        <Heading title="Subjects" btnValue="Add Subject" link="subjects" />
         {data && data.length >= 1 ? (
           <TableComponent
             data={data}

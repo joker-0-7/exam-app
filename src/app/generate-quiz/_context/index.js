@@ -7,6 +7,9 @@ const ExamProvider = ({ children }) => {
     mode: "",
     subjects: [],
     sources: [],
+    questions: [],
+    adv: false,
+    count: 0,
   });
 
   return (

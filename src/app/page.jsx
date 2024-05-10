@@ -55,3 +55,113 @@ export default function Home() {
     </main>
   );
 }
+// "use client";
+// import { useContext } from "react";
+// import { UserContext } from "./context/User";
+// import { PieChart } from "@mui/x-charts/PieChart";
+// import { Card, CardBody, CardHeader } from "@nextui-org/react";
+// import { CardContent } from "@mui/material";
+// import { Button } from "antd";
+// import {
+//   BarChart,
+//   BookIcon,
+//   CalendarIcon,
+//   CheckIcon,
+// } from "./generate-quiz/IconsSVG";
+// export default function Home() {
+//   const [state, setState] = useContext(UserContext);
+//   return (
+//     <main className="flex flex-col gap-8 p-6 md:p-10">
+//       <header className="flex flex-col gap-2">
+//         <h1 className="text-3xl font-bold">Welcome, Student!</h1>
+//         <p className="text-gray-500 dark:text-gray-400">
+//           Explore your academic progress and stay informed.
+//         </p>
+//       </header>
+//       <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
+//         <Card>
+//           <CardHeader className="flex items-center justify-between">
+//             <CardBody>Total Exams</CardBody>
+//             <BookIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+//           </CardHeader>
+//           <CardContent>
+//             <div className="text-4xl font-bold">45</div>
+//             <p className="text-sm text-gray-500 dark:text-gray-400">
+//               Exams scheduled this semester
+//             </p>
+//           </CardContent>
+//         </Card>
+//         <Card>
+//           <CardHeader className="flex items-center justify-between">
+//             <CardBody>Completed Exams</CardBody>
+//             <CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+//           </CardHeader>
+//           <CardContent>
+//             <div className="text-4xl font-bold">38</div>
+//             <p className="text-sm text-gray-500 dark:text-gray-400">
+//               Exams completed so far
+//             </p>
+//           </CardContent>
+//         </Card>
+//         <Card>
+//           <CardHeader className="flex items-center justify-between">
+//             <CardBody>Upcoming Events</CardBody>
+//             <CalendarIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+//           </CardHeader>
+//           <CardContent>
+//             <div className="space-y-2">
+//               <div className="flex items-center justify-between">
+//                 <div>
+//                   <h4 className="font-medium">Midterm Exam</h4>
+//                   <p className="text-sm text-gray-500 dark:text-gray-400">
+//                     April 15, 2023
+//                   </p>
+//                 </div>
+//                 <Button size="sm" variant="ghost">
+//                   Prepare
+//                 </Button>
+//               </div>
+//               <div className="flex items-center justify-between">
+//                 <div>
+//                   <h4 className="font-medium">Parent-Teacher Meeting</h4>
+//                   <p className="text-sm text-gray-500 dark:text-gray-400">
+//                     May 1, 2023
+//                   </p>
+//                 </div>
+//                 <Button size="sm" variant="ghost">
+//                   Attend
+//                 </Button>
+//               </div>
+//             </div>
+//           </CardContent>
+//         </Card>
+//       </section>
+//       <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+//         <Card>
+//           <CardHeader>
+//             <CardBody>Test Score Distribution</CardBody>
+//           </CardHeader>
+//           <CardContent>
+//             <BarChart className="aspect-[4/3]" />
+//           </CardContent>
+//         </Card>
+//         <Card>
+//           <CardHeader>
+//             <CardBody>Grade Trends Over Time</CardBody>
+//           </CardHeader>
+//           <CardContent>
+//             {/* <LineChart className="aspect-[4/3]" /> */}
+//           </CardContent>
+//         </Card>
+//         <Card>
+//           <CardHeader>
+//             <CardBody>Performance by Subject</CardBody>
+//           </CardHeader>
+//           <CardContent>
+//             <BarChart className="aspect-[4/3]" />
+//           </CardContent>
+//         </Card>
+//       </section>
+//     </main>
+//   );
+// }

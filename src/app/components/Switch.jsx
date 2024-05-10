@@ -35,7 +35,7 @@ function Button({ mode, handleModeChange }) {
             mode === "Tutor" ? "active" : ""
           } py-3 px-5 rounded-md`}
         >
-          Test Mode
+          Tutor Mode
         </label>
       </div>
 

@@ -1,26 +1,14 @@
 "use client";
-import { getSubjects } from "@/app/functions/users";
 import { ExamContext } from "@/app/generate-quiz/_context";
 import React, { useContext } from "react";
-import { useEffect, useState } from "react";
-function Subject() {
-  const [data, setData] = useState([]);
+function Subject({ data, setData }) {
   const [exam, setExam] = useContext(ExamContext);
-  useEffect(() => {
-    getSubjects()
-      .then((subjects) => {
-        setData(subjects);
-      })
-      .catch((error) => {
-        console.error("Error fetching subjects:", error);
-      });
-  }, []);
+
   const onChange = (e) => {
     const selectedSource = e.target.value;
     if (!exam.subjects.includes(selectedSource)) {
       setExam({ ...exam, subjects: [...exam.subjects, selectedSource] });
     } else {
-      // If unchecked, remove the selected source from exam.subjects
       setExam({
         ...exam,
         subjects: exam.subjects.filter((subject) => subject !== selectedSource),
@@ -46,6 +34,7 @@ function Subject() {
                     id={s?.name + i}
                     value={s?.name}
                     onChange={onChange}
+                    checked={exam.subjects.includes(s.name) ? true : false}
                   />
                 </div>
                 <div>

@@ -1,24 +1,34 @@
 "use client";
 
+import { UserContext } from "@/app/context/User";
 import { loginLogic } from "@/app/functions/users";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+
 function Page() {
   const router = useRouter();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+  const [state, setState] = useContext(UserContext);
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const status = await loginLogic(data.email, data.password, "admin");
-    if (status.status === "success") {
-      window.localStorage.setItem("auth", JSON.stringify(status.data));
-      router.push("/admin");
-    }
+    const status = await loginLogic(data.email, data.password, "admin").then(
+      (res) => {
+        setState({
+          user: res.data.user,
+          token: res.data.token,
+        });
+        if (res.status === "success") {
+          window.localStorage.setItem("auth", JSON.stringify(res.data));
+          router.push("/admin");
+        }
+      }
+    );
   };
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 h-screen flex justify-center items-center">

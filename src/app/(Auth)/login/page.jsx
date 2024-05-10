@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { loginLogic } from "@/app/functions/users";
 import { useRouter } from "next/navigation";
 import Loader from "@/app/components/Loader";
+import { UserContext } from "@/app/context/User";
+import { useContext } from "react";
 
 function Copyright(props) {
   return (
@@ -38,12 +40,21 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [state, setState] = useContext(UserContext);
   const router = useRouter();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const login = await loginLogic(data.get("email"), data.get("password"));
-    if (login.status === "success") router.push("/");
+    const login = await loginLogic(
+      data.get("email"),
+      data.get("password")
+    ).then((res) => {
+      setState({
+        user: res.data.user,
+        token: res.data.token,
+      });
+      if (res.status === "success") router.push("/");
+    });
   };
 
   return (
