@@ -2,6 +2,9 @@
 import ButtonComponent from "@/app/utils/Button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import Sources from "./Sources";
+import Subjects from "./Subjects";
+import { useState } from "react";
 
 function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
   const addAnswers = () => {
@@ -9,9 +12,13 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
   };
   return (
     <div className="box mx-auto container">
-      <div className="heading">
-        <div className="sources"></div>
-        <div className="subjects"></div>
+      <div className="heading grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div className="sources">
+          <Sources setQuizzes={setQuizzes} quiz={quiz} />
+        </div>
+        <div className="subjects">
+          <Subjects setQuizzes={setQuizzes} quiz={quiz} />
+        </div>
       </div>
       <div className="content">
         <div className="input">

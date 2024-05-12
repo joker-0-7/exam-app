@@ -1,17 +1,9 @@
 import { getSources } from "@/app/functions/users";
 import React, { useEffect, useState } from "react";
 
-const MultiSelect = () => {
+const Sources = ({ setQuizzes, quiz }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const handleSelectChange = (e) => {
-    const selectedValues = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedOptions(selectedValues);
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,23 +15,37 @@ const MultiSelect = () => {
     };
     fetchData();
   }, []);
+  const handleCheckboxChange = (option) => {
+    const isSelected = quiz.sources.includes(option);
+    if (isSelected) {
+      setQuizzes(quiz.sources.filter((item) => item !== option));
+    } else {
+      setQuizzes({ ...quiz, sources: [...quiz.sources, option] });
+    }
+  };
   return (
-    <div>
-      <h2>Chose Sources</h2>
-      <select
-        multiple
-        value={selectedOptions}
-        onChange={handleSelectChange}
-        className="w-full"
-      >
-        {data.map((s, i) => (
-          <option value={s.name} key={i} id={s.name}>
-            {s.name}
-          </option>
-        ))}
-      </select>
+    <div className="dropdown-checkbox">
+      <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)}>
+        Select Sources
+      </button>
+      {isOpen && (
+        <div className="dropdown-content">
+          {data.map((option, index) => (
+            <div key={index} className="">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={quiz.sources.includes(option.name)}
+                  onChange={() => handleCheckboxChange(option.name)}
+                />
+                {option.name}
+              </label>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default MultiSelect;
+export default Sources;
