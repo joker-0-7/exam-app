@@ -1,55 +1,59 @@
-"use client";
-import { ExamContext } from "@/app/generate-quiz/_context";
-import React, { useContext } from "react";
-function Sources({ data, setData }) {
-  const [exam, setExam] = useContext(ExamContext);
+import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
-  const onChange = (e) => {
-    const selectedSource = e.target.value;
-    if (!exam.sources.includes(selectedSource)) {
-      setExam({ ...exam, sources: [...exam.sources, selectedSource] });
-    } else {
-      setExam({
-        ...exam,
-        sources: exam.sources.filter((source) => source !== selectedSource),
-      });
-    }
-  };
+function Sources({ name, data, page }) {
   return (
-    <div className="subject">
-      <div className="grid gap-5 grid-cols-1 lg:grid-cols-4">
-        {data.length >= 1 &&
-          data.map((s, i) => {
+    <div>
+      <label
+        className="flex justify-between font-medium text-gray-900 dark:text-gray-50"
+        htmlFor="sources"
+      >
+        <span>{name}</span>
+        {page && page !== "past papers" && (
+          <span>
+            <Checkbox
+              name={name}
+              label="Select All"
+              onChange={(e) => {
+                let arr = [];
+                exam[name].length > 0
+                  ? setExam({ ...exam, [name]: [] })
+                  : data.map((s) => arr.push(s.name));
+                setExam({ ...exam, [name]: [].concat(arr) });
+              }}
+              checked={exam[name].length === [name].length}
+            >
+              Select All
+            </Checkbox>
+          </span>
+        )}
+      </label>
+      <div className="mt-2 grid gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2">
+          {data[name].map((s, i) => {
             return (
-              <label
-                key={i}
-                htmlFor={s?.name + i}
-                className="flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
-              >
-                <div className="flex items-center">
-                  &#8203;
-                  <input
-                    type="checkbox"
-                    value={s?.name}
-                    className="size-4 rounded border-gray-300"
-                    id={s?.name + i}
-                    checked={exam.sources.includes(s.name) ? true : false}
-                    onChange={onChange}
-                  />
-                </div>
-                <div>
-                  <strong className="text-pretty font-medium text-gray-900">
-                    {s?.name}
-                  </strong>
-                  <p className="mt-1 text-pretty text-sm text-gray-700">
-                    {s?.descriprion}
-                  </p>
-                </div>
-              </label>
+              <div className="flex items-center space-x-2" key={i}>
+                <Checkbox
+                  id={s?.name}
+                  name={name}
+                  onChange={(e) => {
+                    onChange(s.name, name);
+                  }}
+                  checked={exam[name].includes(s?.name) ? true : false}
+                />
+                <label
+                  className="text-sm font-normal text-gray-900 dark:text-gray-50"
+                  htmlFor={s?.name}
+                >
+                  {s?.name}
+                </label>
+              </div>
             );
           })}
+        </div>
       </div>
     </div>
   );
 }
+
 export default Sources;

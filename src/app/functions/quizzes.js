@@ -41,3 +41,46 @@ export const addQuizToUser = async (data) => {
     console.log(error);
   }
 };
+export const getQuizzesUser = async () => {
+  try {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addPastPapers = async (data) => {
+  try {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API}/quiz/past-papers`,
+      { data }
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getPastPaper = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/quiz/past-papers`
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getPastPapers = async (id) => {
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/quiz/past-paper/${id}`
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
