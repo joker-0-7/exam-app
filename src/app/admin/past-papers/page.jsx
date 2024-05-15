@@ -39,9 +39,7 @@ export default function Component() {
     });
   };
   const handleSubmit = async () => {
-    const { data } = await addPastPapers(quizzes).then((res) =>
-      console.log(res)
-    );
+    const data = await addPastPapers(quizzes).then((res) => console.log(res));
   };
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">

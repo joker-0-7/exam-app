@@ -34,8 +34,8 @@ function Page() {
     formdata.append("correct", quizzes.correct);
     formdata.append("explanation", quizzes.explanation);
     formdata.append("subjects", quizzes.subjects);
-    console.log(quizzes);
-    // const data = await addQuizzes(formdata);
+    // console.log(quizzes);
+    const data = await addQuizzes(formdata);
   };
   return (
     <div className="quizzes h-screen overflow-hidden">
