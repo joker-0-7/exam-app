@@ -30,6 +30,7 @@ function Page() {
     let formdata = new FormData();
     formdata.append("img", image);
     formdata.append("sources", quizzes.sources);
+    formdata.append("question", quizzes.question);
     formdata.append("answers", quizzes.answers);
     formdata.append("correct", quizzes.correct);
     formdata.append("explanation", quizzes.explanation);
