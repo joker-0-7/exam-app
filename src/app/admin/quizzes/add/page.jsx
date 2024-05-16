@@ -20,6 +20,8 @@ function Page() {
     setQuizzes((prevQuizzes) => {
       const updatedQuizzes = { ...prevQuizzes };
       updatedQuizzes.answers[answerIndex] = value;
+      console.log(answerIndex);
+      console.log(updatedQuizzes.answers);
       return updatedQuizzes;
     });
   };
@@ -35,15 +37,14 @@ function Page() {
     formdata.append("correct", quizzes.correct);
     formdata.append("explanation", quizzes.explanation);
     formdata.append("subjects", quizzes.subjects);
-    // console.log(quizzes);
     const data = await addQuizzes(formdata);
   };
   return (
     <div className="quizzes h-screen overflow-hidden">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center h-screen">
-          <div className="quiz-box max-h-screen w-full sm:w-1/2 ">
-            <div>
+          <div className="quiz-box min-h-screen w-full sm:w-1/2 ">
+            <div className="min-h-screen">
               <QuizComponent
                 quiz={quizzes}
                 setQuizzes={setQuizzes}

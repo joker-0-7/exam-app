@@ -18,6 +18,12 @@ function Page() {
     };
     fetchData();
   }, []);
+  const handleDelete = (e) => {
+    console.log(e);
+  };
+  const handleUpdate = (e) => {
+    console.log(e);
+  };
   return (
     <div className="quizzes max-h-screen">
       <div className="container mx-auto h-screen flex justify-around flex-col">
@@ -26,6 +32,8 @@ function Page() {
         </div>
         {quizzes.length > 0 ? (
           <TableComponent
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
             data={quizzes}
             page="admin"
             link="/admin/quizzes/add"

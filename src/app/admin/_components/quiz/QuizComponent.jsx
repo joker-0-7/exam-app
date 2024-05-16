@@ -4,11 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Sources from "./Sources";
 import Subjects from "./Subjects";
-import { useState } from "react";
 
 function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
   const addAnswers = () => {
-    setQuizzes({ ...quiz, answers: [...quiz.answers, " "] });
+    setQuizzes({ ...quiz, answers: [...quiz.answers, ""] });
   };
   return (
     <div className="box mx-auto container">
@@ -58,7 +57,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
                     key={i}
                     type="text"
                     placeholder="answer"
-                    onChange={(e) => handleChangeAnswer(e, i)}
+                    onChange={(e) => handleChangeAnswer(e, i + 1)}
                   />
                 );
               })}

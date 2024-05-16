@@ -6,6 +6,7 @@ import { FlagCircleOutlined } from "@mui/icons-material";
 import { Input } from "@nextui-org/react";
 import ButtonComponent from "@/app/utils/Button";
 import { ExamContext } from "../../_context";
+import { Image } from "antd";
 
 function Page() {
   const [exams, setExams] = useState([]);
@@ -159,6 +160,14 @@ function Page() {
                 <p className="mb-6 text-gray-500 dark:text-gray-400">
                   {exams[index]?.question}
                 </p>
+                {exams[index]?.image && (
+                  <div className="image">
+                    <Image
+                      alt="image"
+                      src={`${process.env.NEXT_PUBLIC_API}/public/images/${exams[index].image}`}
+                    />
+                  </div>
+                )}
                 <div className="space-y-2">
                   {shuffledAnswers.map((ans, i) => (
                     <div key={i} className="flex items-center space-x-2">

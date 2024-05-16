@@ -193,3 +193,10 @@ export const deleteSourceById = async (id) => {
     return { status: "fiald" };
   }
 };
+export const endDateUser = async (id, date) => {
+  const rus = await axios.patch(
+    `${process.env.NEXT_PUBLIC_API}/admin/user/${id}`,
+    { date }
+  );
+  return rus.data;
+};

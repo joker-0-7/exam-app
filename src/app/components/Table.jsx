@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { DeleteIcon, TrashIcon } from "@/app/generate-quiz/IconsSVG";
 
-function TableComponent({ data, page }) {
+function TableComponent({ data, page, handleUpdate, handleDelete }) {
   return (
     <div className="border rounded-lg w-full">
       <div className="relative w-full overflow-auto">
@@ -38,13 +38,21 @@ function TableComponent({ data, page }) {
                     {page === "admin" && (
                       <>
                         <TableCell>
-                          <Button size="icon" variant="destructive">
+                          <Button
+                            size="icon"
+                            variant="destructive"
+                            onClick={() => handleDelete(data._id)}
+                          >
                             <TrashIcon className="h-4 w-4" />
                             <span className="sr-only">Delete</span>
                           </Button>
                         </TableCell>
                         <TableCell>
-                          <Button size="icon" variant="outline">
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            onClick={() => handleUpdate(data._id)}
+                          >
                             <DeleteIcon className="h-4 w-4" />
                             <span className="sr-only">Edit</span>
                           </Button>

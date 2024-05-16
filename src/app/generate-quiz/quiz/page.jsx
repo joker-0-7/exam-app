@@ -66,7 +66,7 @@ export default function Component() {
       .then((res) => {
         console.log(res);
         setExam({ ...exam, questions: res.exam });
-        router.push("/generate-quiz/quiz/past-papers");
+        router.push("/generate-quiz/quiz/test");
       })
       .catch((err) => console.log(err));
   };
