@@ -6,6 +6,7 @@ export const addQuizzes = async (quizzes) => {
       `${process.env.NEXT_PUBLIC_API}/quiz`,
       quizzes
     );
+    return { status: true };
   } catch (error) {
     console.log(error);
   }

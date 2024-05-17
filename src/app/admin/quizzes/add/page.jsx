@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import QuizComponent from "../../_components/quiz/QuizComponent";
 import ButtonComponent from "@/app/utils/Button";
 import { addQuizzes } from "@/app/functions/quizzes";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter();
   const [quizzes, setQuizzes] = useState({
     sources: [],
     question: "",
@@ -31,20 +33,22 @@ function Page() {
   const handleSubmit = async (e) => {
     let formdata = new FormData();
     formdata.append("img", image);
-    formdata.append("sources", quizzes.sources);
+    formdata.append("sources", JSON.stringify(quizzes.sources));
     formdata.append("question", quizzes.question);
-    formdata.append("answers", quizzes.answers);
+    formdata.append("answers", JSON.stringify(quizzes.answers));
     formdata.append("correct", quizzes.correct);
     formdata.append("explanation", quizzes.explanation);
-    formdata.append("subjects", quizzes.subjects);
-    const data = await addQuizzes(formdata);
+    formdata.append("subjects", JSON.stringify(quizzes.subjects));
+    const data = await addQuizzes(formdata).then((res) =>
+      router.push("/admin/quizzes")
+    );
   };
   return (
-    <div className="quizzes h-screen overflow-hidden">
+    <div className="quizzes min-h-screen overflow-hidden">
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center h-screen">
-          <div className="quiz-box min-h-screen w-full sm:w-1/2 ">
-            <div className="min-h-screen">
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="quiz-box min-h-screen w-full sm:w-1/2 flex flex-col justify-evenly">
+            <div className="">
               <QuizComponent
                 quiz={quizzes}
                 setQuizzes={setQuizzes}
