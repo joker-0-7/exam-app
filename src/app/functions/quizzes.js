@@ -85,3 +85,32 @@ export const getPastPapers = async (id) => {
     console.log(error);
   }
 };
+
+export const updateQuestion = async (id, data) => {
+  try {
+    const res = await axios.patch(
+      `${process.env.NEXT_PUBLIC_API}/quiz/${id}`,
+      data
+    );
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getQuestion = async (id) => {
+  try {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/${id}`);
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const deleteQuestion = async (id) => {
+  try {
+    const res = await axios.delete(`${process.env.NEXT_PUBLIC_API}/quiz/${id}`);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -1,34 +1,36 @@
 "use client";
-import { getQuizzes } from "@/app/functions/quizzes";
+import { deleteQuestion, getQuizzes } from "@/app/functions/quizzes";
 import React, { useEffect, useState } from "react";
 import Heading from "../_components/Heading";
 import TableComponent from "@/app/components/Table";
 import EmptyPage from "../_components/EmptyPage";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter();
   const [quizzes, setQuizzes] = useState([]);
+  const fetchData = async () => {
+    try {
+      const quizzes = await getQuizzes();
+      setQuizzes(quizzes);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const quizzes = await getQuizzes();
-        setQuizzes(quizzes);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     fetchData();
   }, []);
-  const handleDelete = (e) => {
-    console.log(e);
+  const handleDelete = async (e) => {
+    const data = await deleteQuestion(e).then((res) => fetchData());
   };
-  const handleUpdate = (e) => {
-    console.log(e);
+  const handleUpdate = async (e) => {
+    router.push(`/admin/quizzes/edit/${e}`);
   };
   return (
     <div className="quizzes max-h-screen">
       <div className="container mx-auto h-screen flex justify-around flex-col">
         <div className="header">
-          <Heading btnValue="Add Quizzes" link="quizzes" title="Quizzes" />
+          <Heading btnValue="Add Question" link="quizzes" title="Questions" />
         </div>
         {quizzes.length > 0 ? (
           <TableComponent

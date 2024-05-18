@@ -14,7 +14,7 @@ export const navData = [
   },
   {
     id: 2,
-    name: "Quizzes",
+    name: "Questions",
     link: "/admin/quizzes",
     icon: <FileQuestionIcon className="h-4 w-4" />,
   },

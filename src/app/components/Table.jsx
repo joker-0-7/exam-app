@@ -7,7 +7,8 @@ import {
   Table,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { DeleteIcon, TrashIcon } from "@/app/generate-quiz/IconsSVG";
+import { TrashIcon } from "@/app/generate-quiz/IconsSVG";
+import { UpdateIcon } from "../../../public/assets/Icons";
 
 function TableComponent({ data, page, handleUpdate, handleDelete }) {
   return (
@@ -53,7 +54,7 @@ function TableComponent({ data, page, handleUpdate, handleDelete }) {
                             variant="outline"
                             onClick={() => handleUpdate(data._id)}
                           >
-                            <DeleteIcon className="h-4 w-4" />
+                            <UpdateIcon className="h-4 w-4" />
                             <span className="sr-only">Edit</span>
                           </Button>
                         </TableCell>

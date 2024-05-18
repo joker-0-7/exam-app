@@ -40,6 +40,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
             <Input
               type="text"
               placeholder="Correct Answer"
+              value={quiz.correct}
               onChange={(e) => {
                 handleChangeAnswer(e, 0);
                 setQuizzes((prevQuizzes) => {
@@ -57,6 +58,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
                     key={i}
                     type="text"
                     placeholder="answer"
+                    value={quiz.answers[i + 1]}
                     onChange={(e) => handleChangeAnswer(e, i + 1)}
                   />
                 );
@@ -65,6 +67,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
               <Textarea
                 rows={4}
                 placeholder="Explanation"
+                value={quiz?.explanation}
                 onChange={(e) =>
                   setQuizzes({ ...quiz, explanation: e.target.value })
                 }
