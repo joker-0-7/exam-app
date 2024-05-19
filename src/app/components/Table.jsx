@@ -18,10 +18,14 @@ function TableComponent({ data, page, handleUpdate, handleDelete }) {
           <TableHeader>
             <TableRow>
               <TableHead>Question</TableHead>
-              {page === "admin" && (
+              {page === "admin" ? (
                 <>
                   <TableHead className="w-[100px]">Delete</TableHead>
                   <TableHead className="w-[100px]">Edit</TableHead>
+                </>
+              ) : (
+                <>
+                  <TableHead className="w-[100px]">Answers</TableHead>
                 </>
               )}
             </TableRow>
@@ -31,11 +35,27 @@ function TableComponent({ data, page, handleUpdate, handleDelete }) {
               data.map((data, i) => {
                 return (
                   <TableRow key={i}>
-                    <TableCell>
+                    <TableCell className="w-3/4">
                       {page === "admin"
                         ? data.question
-                        : data.questionId.question}
+                        : data?.questionId !== null && data.questionId.question}
                     </TableCell>
+                    {page !== "admin" && (
+                      <TableCell>
+                        {data?.questionId?.answers.map((ans, i) => (
+                          <p
+                            key={i}
+                            className={
+                              ans == data.questionId.correct
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }
+                          >
+                            {ans}
+                          </p>
+                        ))}
+                      </TableCell>
+                    )}
                     {page === "admin" && (
                       <>
                         <TableCell>

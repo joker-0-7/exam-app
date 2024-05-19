@@ -137,13 +137,12 @@ function Page() {
                     Question {index + 1}
                   </h3>
                   <div className="flex items-center space-x-4">
-                    {(exam && exam.mode === "exam") ||
-                      (exam.time && (
-                        <div className="flex items-center space-x-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                          <ClockCircleOutlined className="h-4 w-4" />
-                          <span>{formatTime(time)}</span>
-                        </div>
-                      ))}
+                    {((exam && exam.mode === "exam") || exam.time) && (
+                      <div className="flex items-center space-x-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <ClockCircleOutlined className="h-4 w-4" />
+                        <span>{formatTime(time)}</span>
+                      </div>
+                    )}
                     <span
                       className={`cursor-pointer h-9 w-9 flex items-center justify-center transition-all ${
                         flags.includes(index) && "bg-amber-300 rounded-full"

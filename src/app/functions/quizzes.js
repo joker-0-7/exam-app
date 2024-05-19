@@ -57,6 +57,7 @@ export const addQuizToUser = async (data) => {
 export const getQuizzesUser = async () => {
   try {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`);
+    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -106,7 +107,9 @@ export const updateQuestion = async (id, data) => {
 };
 export const getQuestion = async (id) => {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/${id}`);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/quiz/update/${id}`
+    );
     return res.data;
   } catch (err) {
     console.log(err);
