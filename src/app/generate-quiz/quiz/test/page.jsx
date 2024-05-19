@@ -169,7 +169,7 @@ function Page() {
                   </div>
                 )}
                 <div className="space-y-2">
-                  {shuffledAnswers.map((ans, i) => (
+                  {exams[index]?.answers.sort().map((ans, i) => (
                     <div key={i} className="flex items-center space-x-2">
                       <label
                         htmlFor={`${ans}_${i}`}
