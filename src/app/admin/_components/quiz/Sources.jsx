@@ -18,10 +18,14 @@ const Sources = ({ setQuizzes, quiz }) => {
   const handleCheckboxChange = (option) => {
     const isSelected = quiz.sources.includes(option);
     if (isSelected) {
-      setQuizzes(quiz.sources.filter((item) => item !== option));
+      setQuizzes({
+        ...quiz,
+        sources: quiz.sources.filter((item) => item !== option),
+      });
     } else {
       setQuizzes({ ...quiz, sources: [...quiz.sources, option] });
     }
+    console.log(quiz.sources);
   };
   return (
     <div className="dropdown-checkbox">
@@ -35,7 +39,7 @@ const Sources = ({ setQuizzes, quiz }) => {
               <label className="checkbox-label">
                 <input
                   type="checkbox"
-                  checked={quiz.sources.includes(option.name)}
+                  checked={quiz["sources"].includes(option.name)}
                   onChange={() => handleCheckboxChange(option.name)}
                 />
                 {option.name}

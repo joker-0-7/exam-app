@@ -9,6 +9,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
   const addAnswers = () => {
     setQuizzes({ ...quiz, answers: [...quiz.answers, ""] });
   };
+  console.log(quiz);
   return (
     <div className="box mx-auto container">
       <div className="heading grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">

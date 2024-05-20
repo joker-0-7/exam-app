@@ -98,7 +98,7 @@ export const getPastPapers = async (id) => {
 export const updateQuestion = async (id, data) => {
   try {
     const res = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API}/quiz/${id}`,
+      `${process.env.NEXT_PUBLIC_API}/quiz/update/${id}`,
       data
     );
   } catch (err) {

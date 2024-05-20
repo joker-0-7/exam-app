@@ -7,7 +7,10 @@ const Subjects = ({ quiz, setQuizzes }) => {
   const handleCheckboxChange = (option) => {
     const isSelected = quiz.subjects.includes(option);
     if (isSelected) {
-      setQuizzes(quiz.subjects.filter((item) => item !== option));
+      setQuizzes({
+        ...quiz,
+        subjects: quiz.subjects.filter((item) => item !== option),
+      });
     } else {
       setQuizzes({ ...quiz, subjects: [...quiz.subjects, option] });
     }
