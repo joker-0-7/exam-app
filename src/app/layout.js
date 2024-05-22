@@ -1,9 +1,10 @@
 import { Cairo } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./globals.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
 import { UserProvider } from "./context/User";
+import UserRouter from "./context/userRouter";
+import "./globals.css";
 const inter = Cairo({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,10 +17,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
         <UserProvider>
-          <div>
-            <Navbar />
-          </div>
-          <div className="h-screen">{children}</div>
+          <UserRouter>
+            <div>
+              <Navbar />
+            </div>
+            <div className="h-screen">{children}</div>
+          </UserRouter>
         </UserProvider>
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></Script>
       </body>

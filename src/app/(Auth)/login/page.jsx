@@ -45,16 +45,16 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const login = await loginLogic(
-      data.get("email"),
-      data.get("password")
-    ).then((res) => {
-      setState({
-        user: res.data.user,
-        token: res.data.token,
-      });
-      if (res.status === "success") router.push("/");
-    });
+    const login = await loginLogic(data.get("email"), data.get("password"))
+      .then((res) => {
+        console.log(res.data.user);
+        setState({
+          user: res.data.user,
+          token: res.data.token,
+        });
+        if (res.status === "success") router.push("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

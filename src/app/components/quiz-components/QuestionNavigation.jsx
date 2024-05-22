@@ -1,36 +1,28 @@
-// import { FlagCircleOutlined, StepForwardOutlined } from "@mui/icons-material";
-
-import { BookOpenIcon } from "@/app/generate-quiz/IconsSVG";
 import { StepForwardOutlined } from "@ant-design/icons";
 
-const QuestionNavigation = ({ exams, flags, setIndex, addFlag, index }) => (
-  <div className="rounded-lg border bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-    <div className="flex items-center justify-between mb-4">
-      <h3 className="text-lg font-semibold">Quiz Questions</h3>
-      <div className="flex items-center space-x-4">
-        <span className="cursor-pointer" onClick={() => setIndex(index + 1)}>
-          <StepForwardOutlined className="h-5 w-5" />
-          <span className="sr-only">Skip question</span>
-        </span>
-      </div>
+const QuestionNavigation = ({ exams, flags, setIndex, index }) => (
+  <div className="rounded-lg border bg-gray-50 px-1 py-6 dark:border-gray-800 dark:bg-gray-900 md:h-screen max-sm:h-1/6 md:mb-0 max-sm:mb-5 ">
+    <div className="flex items-center justify-center md:mb-4 max-sm:mb-1">
+      <h3 className="text-lg font-semibold">Questions</h3>
     </div>
-    <nav className="space-y-2">
+    <nav className="space-y-2 flex md:flex-col max-sm:flex-row">
       {exams.map((exam, i) => (
         <span
           key={i}
           onClick={() => setIndex(i)}
-          className={`flex items-center justify-between cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-colors dark:hover:bg-gray-800 ${
+          className={`flex items-center justify-center cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-colors dark:hover:bg-gray-800 ${
             flags.includes(i)
               ? "bg-amber-300 hover:bg-amber-200"
-              : "hover:bg-gray-100"
+              : "md:hover:bg-gray-100"
           }`}
         >
-          <span>{i + 1}</span>
-          {i === index && (
-            <span className="rounded-full bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-700">
-              Current
-            </span>
-          )}
+          <span
+            className={`md:w-10 md:h-10 rounded-full flex justify-center items-center font-semibold max-sm:w-8 max-sm:h-8 ${
+              i === index && "bg-sky-700 text-white"
+            }`}
+          >
+            {i + 1}
+          </span>
         </span>
       ))}
     </nav>

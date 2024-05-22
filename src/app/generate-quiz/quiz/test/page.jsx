@@ -13,6 +13,8 @@ function Page() {
   const [showAns, setShowAns] = useState(false);
   const [exam, setExam] = useContext(ExamContext);
   const [answersQuiz, setAnswersQuiz] = useState([]);
+  const [exclude, setExclude] = useState(false);
+  const [excludesAns, setExcludesAns] = useState([]);
   const [handleAns, setHandleAns] = useState([]);
   const [userAnswers, setUserAnswers] = useState({});
   const [flags, setFlags] = useState([]);
@@ -31,7 +33,13 @@ function Page() {
   const nextBtn = () => {
     setIndex((num) => (num < exams.length - 1 ? num + 1 : num));
   };
-
+  const handleExcludes = (e) => {
+    if (excludesAns.includes(e)) {
+      setExcludesAns(excludesAns.filter((item) => item !== e));
+    } else {
+      setExcludesAns([...excludesAns, e]);
+    }
+  };
   const checkAnswer = (answerUser, correctAnswer) =>
     answerUser === correctAnswer;
 
@@ -84,10 +92,13 @@ function Page() {
     } else return null;
   };
   return (
-    <div className="quiz min-h-screen flex items-center justify-center">
-      <div className="container">
+    <div className="quiz min-h-screen ">
+      <div className="min-h-screen">
         {index < exams.length ? (
-          <div className="grid grid-cols-[300px_1fr] gap-8 p-8">
+          <div
+            className="lg:grid lg:grid-cols-[100px_1fr] gap-8 p-8 sm:flex sm:flex-col"
+            style={{ minHeight: "inherit" }}
+          >
             <QuestionNavigation
               exams={exams}
               flags={flags}
@@ -97,7 +108,11 @@ function Page() {
             />
             <QuestionDisplay
               exam={exams[index]}
+              setIndex={setIndex}
+              handleExcludes={handleExcludes}
               index={index}
+              excludesAns={excludesAns}
+              setExclude={setExclude}
               exams={exams}
               checkedAns={checkedAns}
               flags={flags}
