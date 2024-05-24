@@ -14,9 +14,9 @@ const ExamProvider = ({ children }) => {
     count: 0,
     time: false,
   });
-  useEffect(() => {
-    if (!exam.mode) router.push("/generate-quiz");
-  }, []);
+  // useEffect(() => {
+  //   if (!exam.mode) router.push("/generate-quiz");
+  // }, []);
   return (
     <ExamContext.Provider value={[exam, setExam]}>
       {children}

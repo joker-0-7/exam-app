@@ -227,13 +227,12 @@ export default function Component() {
                   <Switch
                     aria-label="Include Previously Answered Questions"
                     id="answered"
-                    defaultChecked={exam.advanced}
+                    defaultChecked={exam.adv}
                     onChange={() => {
                       setExam({
                         ...exam,
                         adv: !exam.adv,
                       });
-                      console.log(exam);
                     }}
                   />
                   <label

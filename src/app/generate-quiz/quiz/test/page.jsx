@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState, useContext } from "react";
 import { addQuizToUser } from "@/app/functions/quizzes";
-import { ClockCircleOutlined } from "@ant-design/icons";
 import { ExamContext } from "../../_context";
 import ButtonComponent from "@/app/utils/Button";
 import QuestionNavigation from "@/app/components/quiz-components/QuestionNavigation";
 import QuestionDisplay from "@/app/components/quiz-components/QuestionDisplay";
 import { useTimer } from "@/app/utils/useTimer";
+import Score from "@/app/components/quiz-components/Score";
+import { useRouter } from "next/navigation";
 
 function Page() {
   const [exams, setExams] = useState([]);
@@ -18,6 +19,7 @@ function Page() {
   const [handleAns, setHandleAns] = useState([]);
   const [userAnswers, setUserAnswers] = useState({});
   const [flags, setFlags] = useState([]);
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const time = useTimer(Number(exam?.questions?.length) * 60);
@@ -31,7 +33,7 @@ function Page() {
   }, [index]);
 
   const nextBtn = () => {
-    setIndex((num) => (num < exams.length - 1 ? num + 1 : num));
+    setIndex((num) => (num <= exams.length ? num + 1 : num));
   };
   const handleExcludes = (e) => {
     if (excludesAns.includes(e)) {
@@ -54,13 +56,16 @@ function Page() {
     );
   };
 
-  const ansFun = (e, quizId, i) => {
-    const isCorrect = checkAnswer(userAnswers, exams[i].correct);
+  const ansFun = async (e, quizId, i) => {
+    const isCorrect = checkAnswer(userAnswers[quizId], exams[i].correct);
     if (isCorrect) {
       setAnswersQuiz({ ...answersQuiz, [quizId]: true });
-      setCorrect((prevCorrect) => prevCorrect + 1);
-      if (exam.mode === "tutor") return setShowAns(true);
-      nextBtn();
+      if (exam.mode === "tutor" && e.target.innerHTML === "Next")
+        return setShowAns(true);
+      else {
+        nextBtn();
+        setShowAns(false);
+      }
     } else {
       setAnswersQuiz({ ...answersQuiz, [quizId]: false });
       setShowAns(true);
@@ -68,7 +73,15 @@ function Page() {
         nextBtn();
         setShowAns(false);
       }
+      // if (e.target.innerHTML === "Submit") await addQuizToUser(answersQuiz);
     }
+    setHandleAns([
+      ...handleAns,
+      { quizId: quizId, userAnswer: userAnswers[quizId] },
+    ]);
+    console.log(handleAns);
+    console.log(userAnswers);
+    console.log(e);
   };
 
   const formatTime = (totalSeconds) => {
@@ -82,8 +95,7 @@ function Page() {
   };
 
   const handleSubmit = async () => {
-    const data = await addQuizToUser(answersQuiz);
-    console.log(data);
+    router.push("/");
   };
   const checkedAns = (questionId) => {
     const checkedAnsBefore = handleAns.filter((e) => e.quizId === questionId);
@@ -108,6 +120,7 @@ function Page() {
             />
             <QuestionDisplay
               exam={exams[index]}
+              examsCount={exams.length}
               setIndex={setIndex}
               handleExcludes={handleExcludes}
               index={index}
@@ -127,16 +140,13 @@ function Page() {
             />
           </div>
         ) : (
-          <div className="grid grid-cols-[300px_1fr] gap-8 p-8">
-            <div className="rounded-lg border bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-              <h1>Score</h1>
-              <div className="score">
-                <h2>
-                  {correct} / {exams.length}
-                </h2>
-                <ButtonComponent title="Ok" onClick={handleSubmit} />
-              </div>
-            </div>
+          <div className="flex justify-center items-center min-h-screen p-8 flex-col">
+            <Score
+              correct={correct}
+              answersQuiz={answersQuiz}
+              exams={exams.length}
+              handleSubmit={handleSubmit}
+            />
           </div>
         )}
       </div>
