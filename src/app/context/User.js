@@ -42,9 +42,11 @@ const UserProvider = ({ children }) => {
       if (res && res.status === 401 && !pathName.split("/").includes("login")) {
         setState(null);
         window.localStorage.removeItem("auth");
-        if (pathName.split("/").includes("admin"))
-          return router.push("/admin/login");
-        router.push("/login");
+        if (pathName.split("/").includes("admin")) {
+          router.push("/admin/login");
+        } else {
+          router.push("/login");
+        }
       }
       return Promise.reject(error);
     }

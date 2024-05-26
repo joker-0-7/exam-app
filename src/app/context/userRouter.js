@@ -12,8 +12,12 @@ function UserRouter({ children }) {
   const [state] = useContext(UserContext);
 
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    if (!pathName.split("/").includes("login")) {
+      getCurrentUser();
+    } else {
+      setOk(true);
+    }
+  }, [pathName]);
 
   const getCurrentUser = async () => {
     try {
@@ -22,17 +26,15 @@ function UserRouter({ children }) {
       );
       if (res.data.ok) setOk(true);
     } catch (error) {
-      if (pathName.split("/").includes("admin"))
-        return router.push("/admin/login");
-      router.push("/login");
+      if (pathName.split("/").includes("admin")) {
+        router.push("/admin/login");
+      } else {
+        router.push("/login");
+      }
     }
   };
 
-  if (!ok && !pathName.split("/").includes("login")) {
-    return <Loader />;
-  }
-
-  return <>{children}</>;
+  return !ok ? <Loader /> : <>{children}</>;
 }
 
 export default UserRouter;
