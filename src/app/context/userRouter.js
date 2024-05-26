@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "./User";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
+import Loader from "../components/Loader";
 
 function UserRouter({ children }) {
   const [ok, setOk] = useState(false);
@@ -28,7 +29,7 @@ function UserRouter({ children }) {
   };
 
   if (!ok && !pathName.split("/").includes("login")) {
-    return null;
+    return <Loader />;
   }
 
   return <>{children}</>;

@@ -8,8 +8,6 @@ function Score({ correct, exams, handleSubmit, answersQuiz }) {
   // ES2017
   const total = Object.values(answersQuiz).filter((val) => val);
   const score = (total.length / exams) * 100;
-  console.log(total);
-  console.log(answersQuiz);
   return (
     <>
       <div className="rounded-lg border bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900 lg:w-1/2 max-sm:w-screen">
@@ -25,7 +23,6 @@ function Score({ correct, exams, handleSubmit, answersQuiz }) {
             series={[
               {
                 data: [
-                  { id: 0, value: exams, label: "Total" },
                   {
                     id: 1,
                     value: total.length,

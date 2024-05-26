@@ -17,16 +17,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { UserContext } from "../context/User";
 
 const pages = [
-  { id: 1, name: "Generate Quiz", link: "generate-quiz" },
-  { id: 2, name: "Previous Questions", link: "previous-questions" },
-  { id: 3, name: "Account Setting", link: "account-setting" },
-  { id: 4, name: "About Us", link: "about-us" },
+  { id: 1, name: "Generate Quiz", link: "/generate-quiz" },
+  { id: 2, name: "Previous Questions", link: "/previous-questions" },
+  { id: 3, name: "Account Setting", link: "/account-setting" },
+  { id: 4, name: "About Us", link: "/about-us" },
 ];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -45,7 +43,7 @@ function ResponsiveAppBar() {
   };
   return pathName.split("/")[1] !== "admin" &&
     !pathName.split("/").includes("test") ? (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#020c2b" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -140,7 +138,9 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           {state && state.user && (
-            <Button className="bg-gray-900">Log out</Button>
+            <Button className="bg-gray-900" onClick={logout}>
+              Log out
+            </Button>
           )}
         </Toolbar>
       </Container>

@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { addQuizToUser } from "@/app/functions/quizzes";
 import { ExamContext } from "../../_context";
-import ButtonComponent from "@/app/utils/Button";
 import QuestionNavigation from "@/app/components/quiz-components/QuestionNavigation";
 import QuestionDisplay from "@/app/components/quiz-components/QuestionDisplay";
 import { useTimer } from "@/app/utils/useTimer";
@@ -61,27 +60,28 @@ function Page() {
     if (isCorrect) {
       setAnswersQuiz({ ...answersQuiz, [quizId]: true });
       if (exam.mode === "tutor" && e.target.innerHTML === "Next")
-        return setShowAns(true);
+        setShowAns(true);
       else {
         nextBtn();
         setShowAns(false);
       }
     } else {
       setAnswersQuiz({ ...answersQuiz, [quizId]: false });
-      setShowAns(true);
+      if (exam.mode !== "exam") {
+        setShowAns(true);
+      } else {
+        nextBtn();
+      }
       if (e.target.innerHTML === "Next Question") {
         nextBtn();
         setShowAns(false);
       }
-      // if (e.target.innerHTML === "Submit") await addQuizToUser(answersQuiz);
+      if (e.target.innerHTML === "Submit") await addQuizToUser(answersQuiz);
     }
     setHandleAns([
       ...handleAns,
       { quizId: quizId, userAnswer: userAnswers[quizId] },
     ]);
-    console.log(handleAns);
-    console.log(userAnswers);
-    console.log(e);
   };
 
   const formatTime = (totalSeconds) => {
@@ -108,7 +108,7 @@ function Page() {
       <div className="min-h-screen">
         {index < exams.length ? (
           <div
-            className="lg:grid lg:grid-cols-[100px_1fr] gap-8 p-8 sm:flex sm:flex-col"
+            className="lg:grid lg:grid-cols-[100px_1fr] gap-8 lg:p-8 max-sm:p-2 sm:flex sm:flex-col"
             style={{ minHeight: "inherit" }}
           >
             <QuestionNavigation
@@ -119,7 +119,9 @@ function Page() {
               index={index}
             />
             <QuestionDisplay
+              answersQuiz={answersQuiz}
               exam={exams[index]}
+              examContext={exam}
               examsCount={exams.length}
               setIndex={setIndex}
               handleExcludes={handleExcludes}

@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { ExamContext } from "../_context";
-import { Button, Checkbox, Input, InputNumber, Switch } from "antd";
+import { Button, Checkbox, InputNumber, Switch } from "antd";
 import { getSources, getSubjects } from "@/app/functions/users";
 import {
   addQuizUser,
@@ -9,12 +9,12 @@ import {
   getPastPapers,
 } from "@/app/functions/quizzes";
 import { useRouter } from "next/navigation";
-import { Radio } from "@nextui-org/react";
 import PastPapersChose from "@/app/components/quiz-components/PastPapersChose";
 
 export default function Component() {
   const [exam, setExam] = useContext(ExamContext);
   const [pastPaperId, setPastPaperId] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const [pastPapers, setPastPapers] = useState([]);
   const [sources, setSources] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -61,7 +61,7 @@ export default function Component() {
     }
   };
   const generate = async () => {
-    console.log(exam);
+    setDisabled(true);
     await addQuizUser(exam)
       .then((res) => {
         console.log(res);
@@ -69,12 +69,15 @@ export default function Component() {
         router.push("/generate-quiz/quiz/test");
       })
       .catch((err) => console.log(err));
+    setDisabled(true);
   };
   const generatePastPapers = async () => {
+    setDisabled(true);
     const data = await getPastPapers(pastPaperId).then((res) => {
       setExam({ ...exam, questions: res.data });
       router.push("/generate-quiz/quiz/test");
     });
+    setDisabled(true);
   };
   return (
     <main className="w-full max-w-4xl mx-auto py-12 md:py-16 px-4 md:px-6 min-h-screen flex justify-center items-center">
@@ -282,15 +285,27 @@ export default function Component() {
             </div>
           </div>
           <div className="flex justify-center">
-            <Button
-              className="w-full max-w-[200px] bg-blue-500 hover:bg-blue-600 text-white"
-              type="primary"
-              onClick={() => {
-                exam.mode !== "quiz" ? generate() : generatePastPapers();
-              }}
-            >
-              Generate Quiz
-            </Button>
+            {disabled ? (
+              <Button
+                className="w-full max-w-[200px] bg-blue-500 hover:bg-blue-600 text-white cursor-auto"
+                type="primary"
+                onClick={false}
+                loading
+              >
+                Loading
+              </Button>
+            ) : (
+              <Button
+                className="w-full max-w-[200px] bg-blue-500 hover:bg-blue-600 text-white"
+                type="primary"
+                disabled={!exam.sources.length > 0 || !exam.subjects.length > 0}
+                onClick={() => {
+                  exam.mode !== "quiz" ? generate() : generatePastPapers();
+                }}
+              >
+                Generate Quiz
+              </Button>
+            )}
           </div>
         </form>
       </div>

@@ -1,12 +1,16 @@
+"use client";
 import { Image } from "antd";
 import ButtonComponent from "@/app/utils/Button";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { FlagCircleOutlined } from "@mui/icons-material";
 import { Button } from "@/components/ui/button";
 import { EyeClose, EyeOpen } from "../../../../public/assets";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
-
+import { useContext } from "react";
+import { ExamContext } from "@/app/generate-quiz/_context";
+import { addQuizToUser } from "@/app/functions/quizzes";
+import { useRouter } from "next/navigation";
 const QuestionDisplay = ({
   exam,
   index,
@@ -15,6 +19,7 @@ const QuestionDisplay = ({
   excludesAns,
   handleExcludes,
   handleChange,
+  answersQuiz,
   flags,
   ansFun,
   showAns,
@@ -23,12 +28,15 @@ const QuestionDisplay = ({
   time,
   exams,
   checkedAns,
-  examsCount,
 }) => {
+  const router = useRouter();
+  const [examContext] = useContext(ExamContext);
   const { confirm } = Modal;
   const showConfirm = () => {
-    const okFun = () => {
-      console.log("Accept Ok Exit, ", examsCount);
+    const okFun = async () => {
+      await addQuizToUser(answersQuiz)
+        .then((res) => router.push("/"))
+        .catch((err) => console.log(err));
     };
     confirm({
       title: "Do you want to Exit This Exam",
@@ -44,10 +52,10 @@ const QuestionDisplay = ({
     });
   };
   return (
-    <div className="rounded-lg border bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-      <div className="flex justify-between md:flex-row max-sm:flex-col pb-2 items-center">
-        <div className="flex items-center max-sm:w-full lg:w-auto justify-between">
-          <h3 className="text-lg font-semibold lg:mr-8 max-sm:mr-0 max-sm:text-sm">
+    <div className="rounded-lg border bg-gray-50 lg:p-6 max-sm:p-2 dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex justify-between md:flex-row max-sm:flex-col-reverse pb-2 items-center ">
+        <div className="flex items-center max-sm:w-full lg:w-auto justify-between lg:flex-row max-sm:flex-col">
+          <h3 className="text-lg font-semibold lg:mr-8 lg:mb-0 max-sm:mb-2 max-sm:mr-0 ">
             Question {index + 1}
           </h3>
           <span
@@ -63,16 +71,24 @@ const QuestionDisplay = ({
             <span className="sr-only">Flag question</span>
           </span>
         </div>
-        <div className="flex flex-row-reverse max-sm:justify-between max-sm:items-center max-sm:mt-5 max-sm:w-full lg:w-auto">
+        <div className="flex flex-row-reverse max-sm:justify-between max-sm:items-center max-sm:w-full lg:w-auto">
           <Button
             variant="destructive"
-            className="font-semibold text-xl"
+            className="font-semibold text-lg lg:hidden max-sm:block"
+            onClick={() => showConfirm()}
+          >
+            <CloseCircleOutlined />
+          </Button>
+
+          <Button
+            variant="destructive"
+            className="font-semibold text-lg lg:block max-sm:hidden"
             onClick={() => showConfirm()}
           >
             End Exam
           </Button>
           <div className="flex items-center space-x-4 mr-10">
-            {((exam && exam.mode === "exam") || exam.time) && (
+            {(examContext?.mode === "exam" || examContext?.time) && (
               <div className="flex items-center space-x-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                 <ClockCircleOutlined className="h-4 w-4" />
                 <span>{formatTime(time)}</span>
@@ -122,7 +138,7 @@ const QuestionDisplay = ({
                 </div>
                 <label
                   htmlFor={`${ans}_${i}`}
-                  className="flex items-center cursor-pointer w-1/2 text-left"
+                  className="flex items-center cursor-pointer lg:w-1/2 max-sm:w-full text-left"
                 >
                   <input
                     id={`${ans}_${i}`}
@@ -138,15 +154,18 @@ const QuestionDisplay = ({
                     }
                     value={ans}
                     disabled={
-                      showAns ||
-                      handleAns.filter((e) => e.quizId === exam._id).length > 0
+                      examContext.mode !== "exam" &&
+                      (showAns ||
+                        handleAns.filter((e) => e.quizId === exam._id).length >
+                          0)
                     }
                     type="radio"
                   />
-                  {/* {console.log(handleAns.filter((e) => e.quizId === exam._id))} */}
                   <span
                     className={`ml-2 text-left ${
-                      (showAns || checkedAns(exam._id)) && exam.correct === ans
+                      examContext.mode !== "exam" &&
+                      (showAns || checkedAns(exam._id)) &&
+                      exam.correct === ans
                         ? "text-green-500"
                         : ""
                     }`}
@@ -157,16 +176,17 @@ const QuestionDisplay = ({
               </div>
             ))}
 
-            {showAns ||
-              (handleAns.filter((e) => e.quizId === exam._id).length > 0 && (
-                <div className="explanation">
-                  <h1>Explanation</h1>
-                  {exam.explanation}
-                </div>
-              ))}
+            {examContext.mode !== "exam" &&
+              (showAns ||
+                (handleAns.filter((e) => e.quizId === exam._id).length > 0 && (
+                  <div className="explanation">
+                    <h1>Explanation</h1>
+                    {exam.explanation}
+                  </div>
+                )))}
           </div>
         </div>
-        <div className="flex mt-4 items-center justify-between gap-5">
+        <div className="flex mt-4 lg:items-center justify-between gap-5 max-sm:items-start">
           <div>
             <Button
               disabled={index <= 0}
@@ -176,10 +196,10 @@ const QuestionDisplay = ({
               Previous
             </Button>
           </div>
-          <div>
+          <div className="flex lg:flex-row max-sm:flex-col-reverse items-center justify-center">
             {index < exams.length - 1 && (
               <span
-                className="font-bold cursor-pointer hover:text-gray-500 transition-colors mr-5"
+                className="font-bold cursor-pointer hover:text-gray-500 transition-colors lg:mr-5 lg:mt-0 max-sm:mt-3 max-sm:mr-0"
                 onClick={() => setIndex(index + 1)}
               >
                 Skip
