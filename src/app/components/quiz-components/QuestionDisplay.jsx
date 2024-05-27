@@ -51,6 +51,11 @@ const QuestionDisplay = ({
       },
     });
   };
+  const isChecked = (questionId, answer) => {
+    const checkedAnsBefore = handleAns.find((e) => e.quizId === questionId);
+    return checkedAnsBefore ? checkedAnsBefore.userAnswer === answer : null;
+  };
+
   return (
     <div className="rounded-lg border bg-gray-50 lg:p-6 max-sm:p-2 dark:border-gray-800 dark:bg-gray-900">
       <div className="flex justify-between md:flex-row max-sm:flex-col-reverse pb-2 items-center ">
@@ -116,7 +121,13 @@ const QuestionDisplay = ({
               <div
                 key={i}
                 className={`flex items-center space-x-2 mb-3 border-1 border-gray-700 px-1 py-2 rounded-sm relative ${
-                  excludesAns.includes(ans) && "bg-red-200"
+                  excludesAns.includes(ans) && "bg-red-100"
+                } ${
+                  examContext.mode !== "exam" &&
+                  (showAns || checkedAns(exam._id)) &&
+                  exam.correct === ans
+                    ? "bg-green-100"
+                    : ""
                 }`}
               >
                 <div className="icon absolute right-1">
@@ -145,13 +156,7 @@ const QuestionDisplay = ({
                     name={`answer_${index}`}
                     style={{ width: "50px" }}
                     onChange={handleChange}
-                    checked={
-                      checkedAns(exam._id)
-                        ? checkedAns(exam._id) === ans
-                          ? true
-                          : false
-                        : null
-                    }
+                    checked={isChecked(exam._id, ans)}
                     value={ans}
                     disabled={
                       examContext.mode !== "exam" &&
@@ -161,17 +166,7 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
-                  <span
-                    className={`ml-2 text-left ${
-                      examContext.mode !== "exam" &&
-                      (showAns || checkedAns(exam._id)) &&
-                      exam.correct === ans
-                        ? "text-green-500"
-                        : ""
-                    }`}
-                  >
-                    {ans}
-                  </span>
+                  <span className={`ml-2 text-left `}>{ans}</span>
                 </label>
               </div>
             ))}

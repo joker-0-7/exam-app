@@ -36,8 +36,8 @@ function ResponsiveAppBar() {
   const pathName = usePathname();
   const router = useRouter();
   const [state, setState] = React.useContext(UserContext);
-  const logout = () => {
-    router.push("/login");
+  const logout = async () => {
+    await router.push("/login");
     window.localStorage.removeItem("auth");
     setState({ token: null, user: null });
   };
