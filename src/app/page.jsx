@@ -78,7 +78,7 @@ export default function Home() {
       >
         <header className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">
-            Welcome, {state?.user.firstName}
+            Welcome, {state?.user?.firstName}
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
             Explore your academic progress and stay informed.
