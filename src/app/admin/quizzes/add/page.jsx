@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import QuizComponent from "../../_components/quiz/QuizComponent";
-import ButtonComponent from "@/app/utils/Button";
 import { addQuizzes } from "@/app/functions/quizzes";
 import { useRouter } from "next/navigation";
+import { Button } from "antd";
 
 function Page() {
   const router = useRouter();
@@ -22,8 +22,6 @@ function Page() {
     setQuizzes((prevQuizzes) => {
       const updatedQuizzes = { ...prevQuizzes };
       updatedQuizzes.answers[answerIndex] = value;
-      console.log(answerIndex);
-      console.log(updatedQuizzes.answers);
       return updatedQuizzes;
     });
   };
@@ -31,17 +29,15 @@ function Page() {
     setImage(e.target.files[0]);
   };
   const handleSubmit = async (e) => {
-    let formdata = new FormData();
-    formdata.append("img", image);
-    formdata.append("sources", JSON.stringify(quizzes.sources));
-    formdata.append("question", quizzes.question);
-    formdata.append("answers", JSON.stringify(quizzes.answers));
-    formdata.append("correct", quizzes.correct);
-    formdata.append("explanation", quizzes.explanation);
-    formdata.append("subjects", JSON.stringify(quizzes.subjects));
-    const data = await addQuizzes(formdata).then((res) =>
-      router.push("/admin/quizzes")
-    );
+    let formData = new FormData();
+    formData.append("img", image);
+    formData.append("sources", JSON.stringify(quizzes.sources));
+    formData.append("question", quizzes.question);
+    formData.append("answers", JSON.stringify(quizzes.answers));
+    formData.append("correct", quizzes.correct);
+    formData.append("explanation", quizzes.explanation);
+    formData.append("subjects", JSON.stringify(quizzes.subjects));
+    await addQuizzes(formData).then((res) => router.push("/admin/quizzes"));
   };
   return (
     <div className="quizzes min-h-screen overflow-hidden">
@@ -57,11 +53,16 @@ function Page() {
               />
             </div>
             <div className="footer w-full mt-5">
-              <ButtonComponent
-                title="Submit"
+              <Button
+                type="primary"
                 onClick={handleSubmit}
                 className="w-full"
-              />
+                disabled={
+                  quizzes.sources.length < 1 || quizzes.subjects.length < 1
+                }
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </div>

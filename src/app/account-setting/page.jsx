@@ -11,7 +11,7 @@ import Inputs from "../utils/Inputs";
 function Page() {
   const [state] = useContext(UserContext);
   const [password, setPassword] = useState("");
-  const handleUpdata = async (userId) => {
+  const handleUpdate = async (userId) => {
     const data = await updatePassword(password, userId);
     if (data && data.status && data.status === "success") {
       return true;
@@ -78,7 +78,7 @@ function Page() {
                 <div className="col-span-12 sm:col-span-6 flex justify-between">
                   <ButtonComponent
                     onClick={() => {
-                      handleUpdata(state?.user._id);
+                      handleUpdate(state?.user._id);
                     }}
                     title="Update Password"
                   />

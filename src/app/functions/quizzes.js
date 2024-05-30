@@ -25,7 +25,7 @@ export const getQuizzes = async (current) => {
 export const getQuestionsCount = async () => {
   try {
     const rus = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/quiz/countet/quiz`
+      `${process.env.NEXT_PUBLIC_API}/quiz/count/quiz`
     );
     console.log(rus.data);
     return rus.data.count;
