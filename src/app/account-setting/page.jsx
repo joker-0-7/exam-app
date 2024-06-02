@@ -11,7 +11,7 @@ import Inputs from "../utils/Inputs";
 function Page() {
   const [state] = useContext(UserContext);
   const [password, setPassword] = useState("");
-  const handleUpdata = async (userId) => {
+  const handleUpdate = async (userId) => {
     const data = await updatePassword(password, userId);
     if (data && data.status && data.status === "success") {
       return true;
@@ -44,7 +44,7 @@ function Page() {
         <div className="form-user__title text-center">
           <h1 className="text-2xl font-bold">Settings</h1>
           <p className="text-gray-600">
-            You can change your password only, and you dont need to change
+            You can change your password only, and you don&apos;t need to change
             anything else.
           </p>
         </div>
@@ -54,17 +54,17 @@ function Page() {
               <div className="mt-8 grid grid-cols-12 gap-6">
                 <Inputs
                   title="First Name"
-                  value={state?.user.firstName}
+                  value={state?.user?.firstName}
                   disabled={true}
                 />
                 <Inputs
                   title="Last Name"
-                  value={state?.user.lastName}
+                  value={state?.user?.lastName}
                   disabled={true}
                 />
                 <Inputs
                   title="Email"
-                  value={state?.user.email}
+                  value={state?.user?.email}
                   disabled={true}
                 />
                 <Inputs
@@ -78,7 +78,7 @@ function Page() {
                 <div className="col-span-12 sm:col-span-6 flex justify-between">
                   <ButtonComponent
                     onClick={() => {
-                      handleUpdata(state?.user._id);
+                      handleUpdate(state?.user._id);
                     }}
                     title="Update Password"
                   />

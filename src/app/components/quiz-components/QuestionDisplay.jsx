@@ -51,6 +51,11 @@ const QuestionDisplay = ({
       },
     });
   };
+  const isChecked = (questionId, answer) => {
+    const checkedAnsBefore = handleAns.find((e) => e.quizId === questionId);
+    return checkedAnsBefore ? checkedAnsBefore.userAnswer === answer : null;
+  };
+
   return (
     <div className="rounded-lg border bg-gray-50 lg:p-6 max-sm:p-2 dark:border-gray-800 dark:bg-gray-900">
       <div className="flex justify-between md:flex-row max-sm:flex-col-reverse pb-2 items-center ">
@@ -121,7 +126,11 @@ const QuestionDisplay = ({
                   examContext.mode !== "exam" &&
                   (showAns || checkedAns(exam._id)) &&
                   exam.correct === ans
+<<<<<<< HEAD
                     ? "text-green-500"
+=======
+                    ? "bg-green-100"
+>>>>>>> 88c9836e9538e5505485435a5dc3e518bf3b15fb
                     : ""
                 }`}
               >
@@ -151,13 +160,7 @@ const QuestionDisplay = ({
                     name={`answer_${index}`}
                     style={{ width: "50px" }}
                     onChange={handleChange}
-                    checked={
-                      checkedAns(exam._id)
-                        ? checkedAns(exam._id) === ans
-                          ? true
-                          : false
-                        : null
-                    }
+                    checked={isChecked(exam._id, ans)}
                     value={ans}
                     disabled={
                       examContext.mode !== "exam" &&
@@ -167,7 +170,11 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
+<<<<<<< HEAD
                   <span className={`ml-2 text-left`}>{ans}</span>
+=======
+                  <span className={`ml-2 text-left `}>{ans}</span>
+>>>>>>> 88c9836e9538e5505485435a5dc3e518bf3b15fb
                 </label>
               </div>
             ))}
