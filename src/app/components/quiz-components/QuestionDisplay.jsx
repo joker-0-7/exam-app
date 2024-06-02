@@ -126,11 +126,7 @@ const QuestionDisplay = ({
                   examContext.mode !== "exam" &&
                   (showAns || checkedAns(exam._id)) &&
                   exam.correct === ans
-<<<<<<< HEAD
-                    ? "text-green-500"
-=======
-                    ? "bg-green-100"
->>>>>>> 88c9836e9538e5505485435a5dc3e518bf3b15fb
+                    ? "bg-green-200"
                     : ""
                 }`}
               >
@@ -170,11 +166,7 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
-<<<<<<< HEAD
                   <span className={`ml-2 text-left`}>{ans}</span>
-=======
-                  <span className={`ml-2 text-left `}>{ans}</span>
->>>>>>> 88c9836e9538e5505485435a5dc3e518bf3b15fb
                 </label>
               </div>
             ))}
