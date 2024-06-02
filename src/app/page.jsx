@@ -12,7 +12,7 @@ import {
 } from "./generate-quiz/IconsSVG";
 import { getQuizzesUser } from "./functions/quizzes";
 export default function Home() {
-  const [state, setState] = useContext(UserContext);
+  const [state] = useContext(UserContext);
   const [count, setCount] = useState(0);
   const [success, setSuccess] = useState(0);
   useEffect(() => {
@@ -20,17 +20,17 @@ export default function Home() {
       try {
         const quizzes = await getQuizzesUser();
 
-        const filteredAllQuestions = quizzes[0].question.filter(
+        const filteredAllQuestions = quizzes[0]?.question.filter(
           (question) => question.questionId !== null
         );
-        setCount(filteredAllQuestions.length);
-        const filteredSuccessQuestions = quizzes[0].question.filter(
+        setCount(filteredAllQuestions ? filteredAllQuestions.length : 0);
+        const filteredSuccessQuestions = quizzes[0]?.question.filter(
           (question) => question.value == "true"
         );
-        console.log(filteredSuccessQuestions);
-        setSuccess(filteredSuccessQuestions.length);
 
-        console.log(quizzes[0].question);
+        setSuccess(
+          filteredSuccessQuestions ? filteredSuccessQuestions.length : 0
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }

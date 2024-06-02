@@ -116,7 +116,13 @@ const QuestionDisplay = ({
               <div
                 key={i}
                 className={`flex items-center space-x-2 mb-3 border-1 border-gray-700 px-1 py-2 rounded-sm relative ${
-                  excludesAns.includes(ans) && "bg-red-200"
+                  excludesAns.includes(ans) && "bg-red-100"
+                } ${
+                  examContext.mode !== "exam" &&
+                  (showAns || checkedAns(exam._id)) &&
+                  exam.correct === ans
+                    ? "text-green-500"
+                    : ""
                 }`}
               >
                 <div className="icon absolute right-1">
@@ -161,17 +167,7 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
-                  <span
-                    className={`ml-2 text-left ${
-                      examContext.mode !== "exam" &&
-                      (showAns || checkedAns(exam._id)) &&
-                      exam.correct === ans
-                        ? "text-green-500"
-                        : ""
-                    }`}
-                  >
-                    {ans}
-                  </span>
+                  <span className={`ml-2 text-left`}>{ans}</span>
                 </label>
               </div>
             ))}

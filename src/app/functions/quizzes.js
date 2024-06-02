@@ -2,10 +2,7 @@ import axios from "axios";
 
 export const addQuizzes = async (quizzes) => {
   try {
-    const rus = await axios.post(
-      `${process.env.NEXT_PUBLIC_API}/quiz`,
-      quizzes
-    );
+    await axios.post(`${process.env.NEXT_PUBLIC_API}/quiz`, quizzes);
     return { status: true };
   } catch (error) {
     console.log(error);
@@ -25,9 +22,8 @@ export const getQuizzes = async (current) => {
 export const getQuestionsCount = async () => {
   try {
     const rus = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/quiz/countet/quiz`
+      `${process.env.NEXT_PUBLIC_API}/quiz/count/quiz`
     );
-    console.log(rus.data);
     return rus.data.count;
   } catch (error) {
     console.log(error);
@@ -57,7 +53,6 @@ export const addQuizToUser = async (data) => {
 export const getQuizzesUser = async () => {
   try {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -97,10 +92,7 @@ export const getPastPapers = async (id) => {
 
 export const updateQuestion = async (id, data) => {
   try {
-    const res = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API}/quiz/update/${id}`,
-      data
-    );
+    await axios.patch(`${process.env.NEXT_PUBLIC_API}/quiz/update/${id}`, data);
   } catch (err) {
     console.log(err);
   }
@@ -117,7 +109,7 @@ export const getQuestion = async (id) => {
 };
 export const deleteQuestion = async (id) => {
   try {
-    const res = await axios.delete(`${process.env.NEXT_PUBLIC_API}/quiz/${id}`);
+    await axios.delete(`${process.env.NEXT_PUBLIC_API}/quiz/${id}`);
   } catch (err) {
     console.log(err);
   }

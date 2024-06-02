@@ -3,11 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ExamContext } from "./_context";
 import CardContentComponent from "../components/CardContent";
-import {
-  BookOpenIcon,
-  IconBasic_spread_bookmark,
-  SchoolIcon,
-} from "./IconsSVG";
+import { BookOpenIcon, SchoolIcon } from "./IconsSVG";
 
 function Page() {
   const [exam, setExam] = useContext(ExamContext);

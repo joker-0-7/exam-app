@@ -12,10 +12,14 @@ function UserRouter({ children }) {
   const [state] = useContext(UserContext);
 
   useEffect(() => {
-    if (!pathName.split("/").includes("login")) {
-      getCurrentUser();
-    } else {
+    setOk(false);
+    if (
+      pathName.split("/").includes("login") ||
+      pathName.split("/").includes("register")
+    ) {
       setOk(true);
+    } else {
+      getCurrentUser();
     }
   }, [pathName]);
 

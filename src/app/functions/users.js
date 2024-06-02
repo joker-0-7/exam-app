@@ -126,7 +126,7 @@ export const updatePassword = async (password, userId) => {
 
 export const resetInformation = async (userId) => {
   try {
-    const data = await axios.put(
+    const data = await axios.post(
       `${process.env.NEXT_PUBLIC_API}/users/reset-information/${userId}`
     );
     return { status: "success" };
