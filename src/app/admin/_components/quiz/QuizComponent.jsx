@@ -2,11 +2,16 @@
 import ButtonComponent from "@/app/utils/Button";
 import { Input } from "@/components/ui/input";
 import Sources from "./Sources";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Subjects from "./Subjects";
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
+  const ReactQuill = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
   const addAnswers = () => {
     setQuizzes({ ...quiz, answers: [...quiz.answers, ""] });
   };
