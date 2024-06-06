@@ -1,10 +1,10 @@
 import { Cairo } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
-import Script from "next/script";
 import { UserProvider } from "./context/User";
 import UserRouter from "./context/userRouter";
 import "./globals.css";
+import { ExamProvider } from "./generate-quiz/_context";
 const inter = Cairo({ subsets: ["latin"] });
 
 export const metadata = {
@@ -21,31 +21,13 @@ export default function RootLayout({ children }) {
             <div>
               <Navbar />
             </div>
-            <div className="h-screen">{children}</div>
+            <div className="h-screen">
+              {" "}
+              <ExamProvider>{children}</ExamProvider>
+            </div>
           </UserRouter>
         </UserProvider>
-        {/* <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></Script> */}
-        {/* <script src="https://third-party-script.js" async></script> */}
       </body>
     </html>
   );
 }
-// // مثال على إعدادات التخزين المؤقت في Service Worker
-// self.addEventListener('fetch', (event) => {
-//   event.respondWith(
-//       caches.match(event.request).then((response) => {
-//           return response || fetch(event.request);
-//       })
-//   );
-// });
-
-// if ('loading' in HTMLImageElement.prototype) {
-//     // Use native lazy loading
-//     const images = document.querySelectorAll('img[loading="lazy"]');
-//     images.forEach(img => {
-//         img.src = img.dataset.src;
-//     });
-// } else {
-//     // Use a third-party library or polyfill
-//     // Import and use the lazy loading library
-// }

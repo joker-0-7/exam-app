@@ -5,7 +5,8 @@ import { UserContext } from "./context/User";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { CardContent } from "@mui/material";
 import { getQuizzesUser } from "./functions/quizzes";
-
+// import CardComponent from "./components/CardComponent";
+const CardComponent = dynamic(() => import("./components/CardComponent"));
 const icons = {
   BarChart: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.BarChart)
@@ -34,7 +35,8 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const quizzes = await getQuizzesUser();
+        const quizzes = await getQuizzesUser(state?.token).then((res) => res);
+        console.log(quizzes);
         const filteredAllQuestions = quizzes[0]?.question.filter(
           (question) => question.questionId !== null
         );
@@ -91,50 +93,34 @@ export default function Home() {
         style={{ minHeight: "calc(100vh - 80px)" }}
       >
         <header className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">
-            Welcome, {state?.user?.firstName}
-          </h1>
+          {state?.user && (
+            <h1 className="text-3xl font-bold">
+              Welcome, {state?.user?.firstName}
+            </h1>
+          )}
           <p className="text-gray-500 dark:text-gray-400">
             Explore your academic progress and stay informed.
           </p>
         </header>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <Card>
-            <CardHeader className="flex items-center justify-between">
-              <CardBody>Total Exams</CardBody>
-              <icons.BookIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">{count}</div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Exams scheduled this semester
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex items-center justify-between">
-              <CardBody>Success Exams</CardBody>
-              <icons.CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">{success}</div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Exams completed so far
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex items-center justify-between">
-              <CardBody>Faild Exams</CardBody>
-              <icons.CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-4xl font-bold">{count - success}</div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Exams completed so far
-              </p>
-            </CardContent>
-          </Card>
+          <CardComponent
+            title="Total Exams"
+            value={count}
+            Icon={icons.BookIcon}
+            description="Exams scheduled this semester"
+          />
+          <CardComponent
+            title="Success Exams"
+            value={success}
+            Icon={icons.CheckIcon}
+            description="Exams completed so far"
+          />
+          <CardComponent
+            title="Faild Exams"
+            value={count - success}
+            Icon={icons.BookIcon}
+            description="Exams completed so far"
+          />
         </section>
         <h1 className="block text-2xl font-bold">Important Statistics</h1>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

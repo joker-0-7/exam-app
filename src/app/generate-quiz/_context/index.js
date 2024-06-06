@@ -1,22 +1,39 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+
 const ExamContext = createContext();
 
 const ExamProvider = ({ children }) => {
-  const router = useRouter();
-  const [exam, setExam] = useState({
-    mode: "",
-    subjects: [],
-    sources: [],
-    questions: [],
-    adv: false,
-    count: 0,
-    time: false,
+  const [exam, setExam] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedExam = sessionStorage.getItem("exam");
+      return storedExam
+        ? JSON.parse(storedExam)
+        : {
+            mode: "",
+            subjects: [],
+            sources: [],
+            questions: [],
+            adv: false,
+            count: 0,
+            time: false,
+          };
+    }
+    return {
+      mode: "",
+      subjects: [],
+      sources: [],
+      questions: [],
+      adv: false,
+      count: 0,
+      time: false,
+    };
   });
-  // useEffect(() => {
-  //   if (!exam.mode) router.push("/generate-quiz");
-  // }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("exam", JSON.stringify(exam));
+  }, [exam]);
+
   return (
     <ExamContext.Provider value={[exam, setExam]}>
       {children}

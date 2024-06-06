@@ -50,12 +50,25 @@ export const addQuizToUser = async (data) => {
     console.log(error);
   }
 };
-export const getQuizzesUser = async () => {
+export const getQuizzesUser = async (token) => {
+  // try {
+  //   const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`);
+  //   return res.data;
+  // } catch (error) {
+  //   console.log(error);
+  // }
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`);
-    return res.data;
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    }).then((response) => response.json());
+    console.log(data);
+    return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 export const addPastPapers = async (data) => {
