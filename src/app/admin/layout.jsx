@@ -1,5 +1,5 @@
 "use client";
-import SideMenu from "./_components/SideMinu";
+import SideMenu from "./_components/SideMenu";
 import { UserProvider, UserContext } from "./_context/Current";
 import { useContext } from "react";
 
