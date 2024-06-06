@@ -9,13 +9,13 @@ function Page() {
     const fetchData = async () => {
       try {
         const quizzes = await getQuizzesUser();
-        if (quizzes && quizzes[0].question) {
-          const filteredQuestions = quizzes[0].question.filter(
+        if (quizzes && quizzes[0]?.question) {
+          const filteredQuestions = quizzes[0]?.question.filter(
             (question) => question.questionId !== null
           );
-          setData(filteredQuestions);
+          setData(filteredQuestions.length > 0 ? filteredQuestions : []);
         }
-        console.log(quizzes[0].question);
+        console.log(quizzes[0]?.question);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

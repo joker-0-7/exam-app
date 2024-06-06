@@ -126,7 +126,7 @@ const QuestionDisplay = ({
                   examContext.mode !== "exam" &&
                   (showAns || checkedAns(exam._id)) &&
                   exam.correct === ans
-                    ? "bg-green-100"
+                    ? "bg-green-200"
                     : ""
                 }`}
               >
@@ -166,7 +166,7 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
-                  <span className={`ml-2 text-left `}>{ans}</span>
+                  <span className={`ml-2 text-left`}>{ans}</span>
                 </label>
               </div>
             ))}

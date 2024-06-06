@@ -12,6 +12,7 @@ function UserRouter({ children }) {
   const [state] = useContext(UserContext);
 
   useEffect(() => {
+    setOk(false);
     if (
       pathName.split("/").includes("login") ||
       pathName.split("/").includes("register")

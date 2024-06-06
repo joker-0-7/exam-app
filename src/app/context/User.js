@@ -51,7 +51,6 @@ const UserProvider = ({ children }) => {
       return Promise.reject(error);
     }
   );
-
   return client ? (
     <UserContext.Provider value={[state, setState]}>
       {children}

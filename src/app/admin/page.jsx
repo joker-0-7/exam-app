@@ -25,26 +25,29 @@ import {
 } from "../generate-quiz/IconsSVG";
 import { useEffect, useState } from "react";
 import { getUsers } from "../functions/users";
+import { Image } from "antd";
+import { getQuestionsCount } from "../functions/quizzes";
 
 export default function Component() {
   const [allUsers, setAllUsers] = useState(0);
-  const [newUsers, setNewUser] = useState(0);
+  const [newUsers, setNewUsers] = useState(0);
   const [activeUser, setActiveUser] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0);
   useEffect(() => {
     const fetchUsers = async () => {
       let arr = [];
       let active = [];
       let date = new Date();
       try {
-        const users = await getUsers().then((res) => {
+        await getUsers().then((res) => {
           setAllUsers(res);
           arr = res.filter((user) => {
             const createdAt = new Date(user.createdAt);
             return createdAt.getMonth() == date.getMonth();
           });
-          active = res.filter((user) => user.active == true);
+          active = res.filter((user) => user.active);
         });
-        setNewUser(arr.length);
+        setNewUsers(arr.length);
         setActiveUser(active.length);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -53,7 +56,16 @@ export default function Component() {
 
     fetchUsers();
   }, []);
-
+  useEffect(() => {
+    const getCountQuestions = async () => {
+      try {
+        await getQuestionsCount().then((res) => setTotalQuestions(res));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCountQuestions();
+  }, []);
   return (
     <div className="flex flex-col w-screen sm:w-full">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
@@ -76,7 +88,7 @@ export default function Component() {
               size="icon"
               variant="ghost"
             >
-              <img
+              <Image
                 alt="Avatar"
                 className="rounded-full"
                 height="32"
@@ -159,13 +171,13 @@ export default function Component() {
           </Card>
           <Card>
             <CardHeader className="pb-4">
-              <CardTitle>Total Quizzes</CardTitle>
+              <CardTitle>Total Questions</CardTitle>
               <CardDescription>
-                The total number of available quizzes.
+                The total number of available questions.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold">78</div>
+              <div className="text-4xl font-bold">{totalQuestions || 0}</div>
             </CardContent>
           </Card>
           <Card>

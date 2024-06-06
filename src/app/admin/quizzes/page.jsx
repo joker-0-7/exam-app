@@ -28,13 +28,13 @@ function Page() {
     try {
       const questionsCount = await getQuestionsCount();
       setCount(questionsCount);
-      console.log(questionsCount);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
   useEffect(() => {
     countData();
@@ -44,7 +44,7 @@ function Page() {
     setCurrent(+page);
   };
   const handleDelete = async (e) => {
-    const data = await deleteQuestion(e).then((res) => fetchData());
+    await deleteQuestion(e).then((res) => fetchData());
   };
   const handleUpdate = async (e) => {
     router.push(`/admin/quizzes/edit/${e}`);
