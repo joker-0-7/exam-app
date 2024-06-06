@@ -1,5 +1,3 @@
-import { StepForwardOutlined } from "@ant-design/icons";
-
 const QuestionNavigation = ({ exams, flags, setIndex, index }) => (
   <div className="rounded-lg border bg-gray-50 px-1 py-6 dark:border-gray-800 dark:bg-gray-900 lg:h-screen max-sm:h-1/6 md:mb-0 max-sm:mb-5 ">
     <div className="flex items-center justify-center lg:mb-4 max-sm:mb-1">

@@ -24,8 +24,28 @@ export default function RootLayout({ children }) {
             <div className="h-screen">{children}</div>
           </UserRouter>
         </UserProvider>
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></Script>
+        {/* <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></Script> */}
+        {/* <script src="https://third-party-script.js" async></script> */}
       </body>
     </html>
   );
 }
+// // مثال على إعدادات التخزين المؤقت في Service Worker
+// self.addEventListener('fetch', (event) => {
+//   event.respondWith(
+//       caches.match(event.request).then((response) => {
+//           return response || fetch(event.request);
+//       })
+//   );
+// });
+
+// if ('loading' in HTMLImageElement.prototype) {
+//     // Use native lazy loading
+//     const images = document.querySelectorAll('img[loading="lazy"]');
+//     images.forEach(img => {
+//         img.src = img.dataset.src;
+//     });
+// } else {
+//     // Use a third-party library or polyfill
+//     // Import and use the lazy loading library
+// }

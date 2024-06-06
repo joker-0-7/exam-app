@@ -1,36 +1,66 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { UserContext } from "./context/User";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { CardContent } from "@mui/material";
-import {
-  BarChart,
-  BookIcon,
-  CheckIcon,
-  LineChart,
-  PieChart,
-} from "./generate-quiz/IconsSVG";
 import { getQuizzesUser } from "./functions/quizzes";
+
+const icons = {
+  BarChart: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.BarChart)
+  ),
+  BookIcon: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.BookIcon)
+  ),
+  CheckIcon: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.CheckIcon)
+  ),
+  LineChart: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.LineChart)
+  ),
+  PieChart: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.PieChart)
+  ),
+};
+
 export default function Home() {
-  const [state, setState] = useContext(UserContext);
+  const [state] = useContext(UserContext);
   const [count, setCount] = useState(0);
   const [success, setSuccess] = useState(0);
+  const [recallsSuccess, setRecallsSuccess] = useState(0);
+  const [recallsFaild, setRecallsFaild] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const quizzes = await getQuizzesUser();
-
-        const filteredAllQuestions = quizzes[0].question.filter(
+        const filteredAllQuestions = quizzes[0]?.question.filter(
           (question) => question.questionId !== null
         );
-        setCount(filteredAllQuestions.length);
-        const filteredSuccessQuestions = quizzes[0].question.filter(
+        setCount(filteredAllQuestions ? filteredAllQuestions.length : 0);
+        const filteredSuccessQuestions = quizzes[0]?.question.filter(
           (question) => question.value == "true"
         );
-        console.log(filteredSuccessQuestions);
-        setSuccess(filteredSuccessQuestions.length);
-
-        console.log(quizzes[0].question);
+        setSuccess(
+          filteredSuccessQuestions ? filteredSuccessQuestions.length : 0
+        );
+        const recallsQuestionsSuccess = quizzes[0]?.question.filter(
+          (question) =>
+            question?.questionId?.sources[0] == "Recalls" &&
+            question.value == "true"
+        );
+        setRecallsSuccess(
+          recallsQuestionsSuccess ? recallsQuestionsSuccess.length : 0
+        );
+        const recallsQuestionsFaild = quizzes[0]?.question.filter(
+          (question) =>
+            question?.questionId?.sources[0] == "Recalls" &&
+            question.value == "false"
+        );
+        setRecallsFaild(
+          recallsQuestionsFaild ? recallsQuestionsFaild.length : 0
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,38 +68,22 @@ export default function Home() {
 
     fetchData();
   }, []);
+
   const data = [
     {
-      id: "python",
-      label: "python",
-      value: 588,
+      id: "success",
+      label: "success",
+      value: recallsSuccess,
       color: "hsl(124, 70%, 50%)",
     },
     {
-      id: "make",
-      label: "make",
-      value: 3,
+      id: "faild",
+      label: "faild",
+      value: recallsFaild,
       color: "hsl(43, 70%, 50%)",
     },
-    {
-      id: "php",
-      label: "php",
-      value: 230,
-      color: "hsl(190, 70%, 50%)",
-    },
-    {
-      id: "ruby",
-      label: "ruby",
-      value: 376,
-      color: "hsl(352, 70%, 50%)",
-    },
-    {
-      id: "scala",
-      label: "scala",
-      value: 318,
-      color: "hsl(190, 70%, 50%)",
-    },
   ];
+
   return (
     <div className="min-h-screen flex items-end">
       <main
@@ -88,7 +102,7 @@ export default function Home() {
           <Card>
             <CardHeader className="flex items-center justify-between">
               <CardBody>Total Exams</CardBody>
-              <BookIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              <icons.BookIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{count}</div>
@@ -100,7 +114,7 @@ export default function Home() {
           <Card>
             <CardHeader className="flex items-center justify-between">
               <CardBody>Success Exams</CardBody>
-              <CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              <icons.CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{success}</div>
@@ -112,7 +126,7 @@ export default function Home() {
           <Card>
             <CardHeader className="flex items-center justify-between">
               <CardBody>Faild Exams</CardBody>
-              <CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+              <icons.CheckIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
             </CardHeader>
             <CardContent>
               <div className="text-4xl font-bold">{count - success}</div>
@@ -130,7 +144,7 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <div className="aspect-[4/3]">
-                <PieChart data={data} />
+                <icons.PieChart data={data} />
               </div>
             </CardContent>
           </Card>
@@ -139,7 +153,7 @@ export default function Home() {
               <CardBody>Grade Trends Over Time</CardBody>
             </CardHeader>
             <CardContent>
-              <LineChart className="aspect-[4/3]" />
+              <icons.LineChart className="aspect-[4/3]" />
             </CardContent>
           </Card>
           <Card>
@@ -147,7 +161,7 @@ export default function Home() {
               <CardBody>Performance by Subject</CardBody>
             </CardHeader>
             <CardContent>
-              <BarChart className="aspect-[4/3]" />
+              <icons.BarChart className="aspect-[4/3]" />
             </CardContent>
           </Card>
         </section>

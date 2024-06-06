@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { BellIcon, LayoutGridIcon } from "@/app/generate-quiz/IconsSVG";
 import { Button } from "@/components/ui/button";
-function SideMinu() {
+function SideMenu() {
   const pathName = usePathname();
   const router = useRouter();
   const logOut = () => {
@@ -53,4 +53,4 @@ function SideMinu() {
   );
 }
 
-export default SideMinu;
+export default SideMenu;
