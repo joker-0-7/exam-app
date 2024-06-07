@@ -226,26 +226,7 @@ export default function Component() {
             </label>
             <div className="mt-2 grid gap-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    aria-label="Include Previously Answered Questions"
-                    id="answered"
-                    defaultChecked={exam.adv}
-                    onChange={() => {
-                      setExam({
-                        ...exam,
-                        adv: !exam.adv,
-                      });
-                    }}
-                  />
-                  <label
-                    className="text-sm font-normal text-gray-900 dark:text-gray-50"
-                    htmlFor="answered"
-                  >
-                    Include Previously Answered Questions
-                  </label>
-                </div>
-                {exam.mode && exam.mode === "quiz" && (
+                {exam.mode && exam.mode === "quiz" ? (
                   <div className="flex items-center space-x-2">
                     <Switch
                       aria-label="Generate Past Papers with time"
@@ -265,22 +246,44 @@ export default function Component() {
                       Generate Past Papers with time
                     </label>
                   </div>
+                ) : (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        aria-label="Include Previously Answered Questions"
+                        id="answered"
+                        defaultChecked={exam.adv}
+                        onChange={() => {
+                          setExam({
+                            ...exam,
+                            adv: !exam.adv,
+                          });
+                        }}
+                      />
+                      <label
+                        className="text-sm font-normal text-gray-900 dark:text-gray-50"
+                        htmlFor="answered"
+                      >
+                        Include Previously Answered Questions
+                      </label>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                      <label
+                        htmlFor="count"
+                        className="text-sm font-normal text-gray-900 dark:text-gray-50"
+                      >
+                        Count Questions
+                      </label>
+                      <InputNumber
+                        max={400}
+                        id="count"
+                        onChange={(e) => {
+                          setExam({ ...exam, count: e });
+                        }}
+                      />
+                    </div>
+                  </>
                 )}
-                <div className="flex flex-col justify-center items-center">
-                  <label
-                    htmlFor="count"
-                    className="text-sm font-normal text-gray-900 dark:text-gray-50"
-                  >
-                    Count Questions
-                  </label>
-                  <InputNumber
-                    max={400}
-                    id="count"
-                    onChange={(e) => {
-                      setExam({ ...exam, count: e });
-                    }}
-                  />
-                </div>
               </div>
             </div>
           </div>
