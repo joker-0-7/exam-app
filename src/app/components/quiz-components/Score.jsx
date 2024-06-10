@@ -2,7 +2,7 @@ import ButtonComponent from "@/app/utils/Button";
 import { PieChart } from "@mui/x-charts";
 import React from "react";
 
-function Score({ correct, exams, handleSubmit, answersQuiz }) {
+function Score({ exams, handleSubmit, answersQuiz }) {
   // ES5
   // const total = Object.keys(answersQuiz).filter((key) => answersQuiz[key]);
   // ES2017

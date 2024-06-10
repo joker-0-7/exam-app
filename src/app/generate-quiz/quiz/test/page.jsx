@@ -60,7 +60,7 @@ function Page() {
     if (isCorrect) {
       setAnswersQuiz({ ...answersQuiz, [quizId]: true });
       if (exam.mode === "tutor" && e.target.innerHTML === "Next")
-        setShowAns(true);
+        return setShowAns(true);
       else {
         nextBtn();
         setShowAns(false);
@@ -76,12 +76,16 @@ function Page() {
         nextBtn();
         setShowAns(false);
       }
-      if (e.target.innerHTML === "Submit") await addQuizToUser(answersQuiz);
+      if (e.target.innerHTML === "Submit") {
+        await addQuizToUser(answersQuiz);
+        nextBtn();
+      }
     }
     setHandleAns([
       ...handleAns,
       { quizId: quizId, userAnswer: userAnswers[quizId] },
     ]);
+    console.log(answersQuiz);
   };
 
   const formatTime = (totalSeconds) => {
@@ -95,6 +99,15 @@ function Page() {
   };
 
   const handleSubmit = async () => {
+    setExam({
+      mode: "",
+      subjects: [],
+      sources: [],
+      questions: [],
+      adv: false,
+      count: 0,
+      time: false,
+    });
     router.push("/");
   };
   const checkedAns = (questionId) => {

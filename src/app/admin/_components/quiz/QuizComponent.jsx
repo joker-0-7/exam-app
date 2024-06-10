@@ -91,7 +91,7 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <Input type="file" onChange={uploadFile} accept="image/*" />
-              <ButtonComponent title="Add Answer" onClick={addAnswers} />
+              {/* <ButtonComponent title="Add Answer" onClick={addAnswers} /> */}
             </div>
           </div>
         </div>

@@ -52,7 +52,7 @@ function Page() {
   return (
     <div className="quizzes max-h-screen">
       <div className="container mx-auto h-screen flex justify-around flex-col">
-        <div className="header">
+        <div className="header py-4">
           <Heading btnValue="Add Question" link="quizzes" title="Questions" />
         </div>
         {quizzes.length > 0 ? (
@@ -64,11 +64,13 @@ function Page() {
               page="admin"
               link="/admin/quizzes/add"
             />
-            <PaginationComp
-              current={current}
-              count={count}
-              onChange={onChange}
-            />
+            <div className="pagination py-4">
+              <PaginationComp
+                current={current}
+                count={count}
+                onChange={onChange}
+              />
+            </div>
           </>
         ) : (
           <EmptyPage link="/admin/quizzes/add" />

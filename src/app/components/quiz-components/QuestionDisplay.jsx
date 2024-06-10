@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 import { EyeClose, EyeOpen } from "../../../../public/assets";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ExamContext } from "@/app/generate-quiz/_context";
 import { addQuizToUser } from "@/app/functions/quizzes";
 import { useRouter } from "next/navigation";
+import parse from "html-react-parser";
+
 const QuestionDisplay = ({
   exam,
   index,
@@ -31,6 +33,7 @@ const QuestionDisplay = ({
 }) => {
   const router = useRouter();
   const [examContext] = useContext(ExamContext);
+  const [checked, setChecked] = useState("");
   const { confirm } = Modal;
   const showConfirm = () => {
     const okFun = async () => {
@@ -55,6 +58,9 @@ const QuestionDisplay = ({
     const checkedAnsBefore = handleAns.find((e) => e.quizId === questionId);
     return checkedAnsBefore ? checkedAnsBefore.userAnswer === answer : null;
   };
+  const shouldShowExplanation =
+    examContext.mode !== "exam" &&
+    (showAns || handleAns.some((e) => e.quizId === exam._id));
 
   return (
     <div className="rounded-lg border bg-gray-50 lg:p-6 max-sm:p-2 dark:border-gray-800 dark:bg-gray-900">
@@ -128,6 +134,9 @@ const QuestionDisplay = ({
                   exam.correct === ans
                     ? "bg-green-200"
                     : ""
+                } ${
+                  (isChecked(exam._id, ans) || checked === ans) &&
+                  "border-blue-600 border-2"
                 }`}
               >
                 <div className="icon absolute right-1">
@@ -155,8 +164,12 @@ const QuestionDisplay = ({
                     id={`${ans}_${i}`}
                     name={`answer_${index}`}
                     style={{ width: "50px" }}
-                    onChange={handleChange}
-                    checked={isChecked(exam._id, ans)}
+                    onChange={(e) => {
+                      setChecked(ans);
+                      handleChange(e);
+                    }}
+                    // checked={isChecked(exam._id, ans)}
+                    hidden={true}
                     value={ans}
                     disabled={
                       examContext.mode !== "exam" &&
@@ -171,14 +184,12 @@ const QuestionDisplay = ({
               </div>
             ))}
 
-            {examContext.mode !== "exam" &&
-              (showAns ||
-                (handleAns.filter((e) => e.quizId === exam._id).length > 0 && (
-                  <div className="explanation">
-                    <h1>Explanation</h1>
-                    {exam.explanation}
-                  </div>
-                )))}
+            {shouldShowExplanation && (
+              <div className="explanation">
+                <h1>Explanation</h1>
+                {parse(exam?.explanation)}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex mt-4 lg:items-center justify-between gap-5 max-sm:items-start">
@@ -208,8 +219,8 @@ const QuestionDisplay = ({
                     ? "Next Question"
                     : "Next"
                   : showAns
-                  ? "Next Question"
-                  : "Submit"
+                  ? "Submit"
+                  : "Next"
               }
             />
           </div>

@@ -21,8 +21,7 @@ export default function RootLayout({ children }) {
             <div>
               <Navbar />
             </div>
-            <div className="h-screen">
-              {" "}
+            <div className="min-h-screen">
               <ExamProvider>{children}</ExamProvider>
             </div>
           </UserRouter>

@@ -62,11 +62,13 @@ export default function Component() {
   };
   const generate = async () => {
     setDisabled(true);
+    console.log(Date.now());
     await addQuizUser(exam)
       .then((res) => {
         console.log(res);
-        setExam({ ...exam, questions: res.exam });
+        setExam({ ...exam, questions: res?.exam });
         router.push("/generate-quiz/quiz/test");
+        console.log(Date.now());
       })
       .catch((err) => console.log(err));
     setDisabled(true);

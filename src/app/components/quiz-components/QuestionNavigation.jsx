@@ -1,5 +1,5 @@
 const QuestionNavigation = ({ exams, flags, setIndex, index }) => (
-  <div className="rounded-lg border bg-gray-50 px-1 py-6 dark:border-gray-800 dark:bg-gray-900 lg:h-screen max-sm:h-1/6 md:mb-0 max-sm:mb-5 ">
+  <div className="rounded-lg border bg-gray-50 px-1 py-6 dark:border-gray-800 dark:bg-gray-900 lg:max-h-screen max-sm:max-h-1/6 md:mb-0 max-sm:mb-5 overflow-auto">
     <div className="flex items-center justify-center lg:mb-4 max-sm:mb-1">
       <h3 className="text-lg font-semibold">Questions</h3>
     </div>
