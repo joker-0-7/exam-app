@@ -134,22 +134,22 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          <Card>
+          {/* <Card>
             <CardHeader>
               <CardBody>Grade Trends Over Time</CardBody>
             </CardHeader>
             <CardContent>
               <icons.LineChart className="aspect-[4/3]" />
             </CardContent>
-          </Card>
-          <Card>
+          </Card> */}
+          {/* <Card>
             <CardHeader>
               <CardBody>Performance by Subject</CardBody>
             </CardHeader>
             <CardContent>
               <icons.BarChart className="aspect-[4/3]" />
             </CardContent>
-          </Card>
+          </Card> */}
         </section>
       </main>
     </div>
