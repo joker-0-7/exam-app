@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Loader from "@/app/components/Loader";
 import { UserContext } from "@/app/context/User";
 import { useContext } from "react";
+import axios from "axios";
 
 function Copyright(props) {
   return (
@@ -56,7 +57,16 @@ export default function SignIn() {
       })
       .catch((err) => console.log(err));
   };
-
+  const freeTrail = async () => {
+    try {
+      const rus = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/users/free-trail`
+      );
+      console.log(rus);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -75,6 +85,9 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <Button component="h1" variant="h5">
+            Free Trial
+          </Button>
           <Box
             component="form"
             method="post"
@@ -113,6 +126,14 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={freeTrail}
+            >
+              Free Trial
             </Button>
             <Grid container>
               <Grid item xs>

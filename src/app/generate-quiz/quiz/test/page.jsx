@@ -31,6 +31,35 @@ function Page() {
     setShowAns(false);
   }, [index]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue =
+        "Are you sure you want to leave? Your progress will be lost.";
+      if (!window.confirm(confirmationMessage)) {
+        event.preventDefault();
+        window.history.pushState(null, null, window.location.pathname);
+      }
+    };
+
+    const handlePopState = (event) => {
+      const confirmationMessage =
+        "Are you sure you want to leave? Your progress will be lost.";
+      if (!window.confirm(confirmationMessage)) {
+        event.preventDefault();
+        window.history.pushState(null, null, window.location.pathname);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
   const nextBtn = () => {
     setIndex((num) => (num <= exams.length ? num + 1 : num));
   };

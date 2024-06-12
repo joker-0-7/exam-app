@@ -8,7 +8,7 @@ import { Button } from "antd";
 function Page() {
   const router = useRouter();
   const [quizzes, setQuizzes] = useState({
-    sources: ["Recalls"],
+    sources: [""],
     question: "",
     answers: ["", ""],
     correct: "",
@@ -39,15 +39,15 @@ function Page() {
     formData.append("subjects", JSON.stringify(quizzes.subjects));
     await addQuizzes(formData).then((res) => {
       router.push("/admin/quizzes");
-      // setQuizzes({
-      //   sources: ["Recalls"],
-      //   question: "",
-      //   answers: ["", ""],
-      //   correct: "",
-      //   image: "",
-      //   explanation: "",
-      //   subjects: [""],
-      // });
+      //   setQuizzes({
+      //     sources: [""],
+      //     question: "",
+      //     correct: "",
+      //     image: "",
+      //     explanation: "",
+      //     answers: ["", ""],
+      //     subjects: [""],
+      //   });
     });
   };
   return (

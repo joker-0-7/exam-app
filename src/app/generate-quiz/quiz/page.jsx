@@ -49,6 +49,9 @@ export default function Component() {
         console.error("Error fetching subjects:", error);
       });
   }, []);
+  useEffect(()=>{
+    setExam({...exam, questions: [] })
+  },[])
   const onChange = (e, change) => {
     const selectedSource = e;
     if (!exam[change].includes(selectedSource)) {

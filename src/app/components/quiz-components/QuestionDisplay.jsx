@@ -136,7 +136,7 @@ const QuestionDisplay = ({
                     : ""
                 } ${
                   (isChecked(exam._id, ans) || checked === ans) &&
-                  "border-blue-600 border-2"
+                  "border-sky-400 shadow-md border-2"
                 }`}
               >
                 <div className="icon absolute right-1">
@@ -179,7 +179,9 @@ const QuestionDisplay = ({
                     }
                     type="radio"
                   />
-                  <span className={`ml-2 text-left`}>{ans}</span>
+                  <span className={`ml-2 text-left`}>
+                    {ans != "" ? ans : false}
+                  </span>
                 </label>
               </div>
             ))}
