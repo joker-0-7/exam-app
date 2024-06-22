@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { UserContext } from "./context/User";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { CardContent } from "@mui/material";
-import { getQuizzesUser } from "./functions/quizzes";
+import { getQuestionsCount, getQuizzesUser } from "./functions/quizzes";
 // import CardComponent from "./components/CardComponent";
 const CardComponent = dynamic(() => import("./components/CardComponent"));
 const icons = {
@@ -17,9 +17,9 @@ const icons = {
   CheckIcon: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.CheckIcon)
   ),
-  LineChart: dynamic(() =>
-    import("./generate-quiz/IconsSVG").then((mod) => mod.LineChart)
-  ),
+  // LineChart: dynamic(() =>
+  //   import("./generate-quiz/IconsSVG").then((mod) => mod.LineChart)
+  // ),
   PieChart: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.PieChart)
   ),
@@ -31,12 +31,12 @@ export default function Home() {
   const [success, setSuccess] = useState(0);
   const [recallsSuccess, setRecallsSuccess] = useState(0);
   const [recallsFaild, setRecallsFaild] = useState(0);
+  const [questionsCount, setQuestionsCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const quizzes = await getQuizzesUser(state?.token).then((res) => res);
-        console.log(quizzes);
         const filteredAllQuestions = quizzes[0]?.question.filter(
           (question) => question.questionId !== null
         );
@@ -63,6 +63,9 @@ export default function Home() {
         setRecallsFaild(
           recallsQuestionsFaild ? recallsQuestionsFaild.length : 0
         );
+        const res = await getQuestionsCount().then((res) =>
+          setQuestionsCount(res)
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -85,7 +88,20 @@ export default function Home() {
       color: "hsl(43, 70%, 50%)",
     },
   ];
-
+  const questions = [
+    {
+      id: "total question",
+      label: "Total Questions",
+      value: questionsCount,
+      color: "hsl(43, 70%, 50%)",
+    },
+    {
+      id: "answered questions",
+      label: "Answered Questions",
+      value: count,
+      color: "hsl(124, 70%, 50%)",
+    },
+  ];
   return (
     <div className="min-h-screen flex items-end">
       <main
@@ -131,6 +147,16 @@ export default function Home() {
             <CardContent>
               <div className="aspect-[4/3]">
                 <icons.PieChart data={data} />
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardBody>Test Score Distribution</CardBody>
+            </CardHeader>
+            <CardContent>
+              <div className="aspect-[4/3]">
+                <icons.PieChart data={questions} />
               </div>
             </CardContent>
           </Card>

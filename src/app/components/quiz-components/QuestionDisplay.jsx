@@ -38,7 +38,7 @@ const QuestionDisplay = ({
   const showConfirm = () => {
     const okFun = async () => {
       await addQuizToUser(answersQuiz)
-        .then((res) => router.push("/"))
+        .then((res) => setIndex(exams.length + 1))
         .catch((err) => console.log(err));
     };
     confirm({
@@ -158,13 +158,13 @@ const QuestionDisplay = ({
                 </div>
                 <label
                   htmlFor={`${ans}_${i}`}
-                  className="flex items-center cursor-pointer lg:w-1/2 max-sm:w-full text-left"
+                  className="flex items-center cursor-pointer w-full text-left"
                 >
                   <input
                     id={`${ans}_${i}`}
                     name={`answer_${index}`}
                     style={{ width: "50px" }}
-                    onChange={(e) => {
+                    onClick={(e) => {
                       setChecked(ans);
                       handleChange(e);
                     }}

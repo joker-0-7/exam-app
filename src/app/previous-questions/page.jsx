@@ -1,14 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getQuizzesUser } from "../functions/quizzes";
 import TableComponent from "../components/Table";
+import { UserContext } from "../context/User";
 
 function Page() {
   const [data, setData] = useState([]);
+  const [state] = useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
+      const token = state?.token;
       try {
-        const quizzes = await getQuizzesUser();
+        const quizzes = await getQuizzesUser(token);
         if (quizzes && quizzes[0]?.question) {
           const filteredQuestions = quizzes[0]?.question.filter(
             (question) => question.questionId !== null

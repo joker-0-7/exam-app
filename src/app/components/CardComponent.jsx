@@ -5,7 +5,7 @@ import React from "react";
 
 function CardComponent({ title, value, description, Icon }) {
   return (
-    <Card>
+    <Card className="shadow-md">
       <CardHeader className="flex items-center justify-between">
         <CardBody>{title}</CardBody>
         <Icon className="h-6 w-6 text-gray-500 dark:text-gray-400" />

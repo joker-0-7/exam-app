@@ -85,7 +85,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Button component="h1" variant="h5">
+          <Button component="h1" variant="h5" disabled>
             Free Trial
           </Button>
           <Box
