@@ -168,7 +168,6 @@ const QuestionDisplay = ({
                       setChecked(ans);
                       handleChange(e);
                     }}
-                    // checked={isChecked(exam._id, ans)}
                     hidden={true}
                     value={ans}
                     disabled={
@@ -188,7 +187,8 @@ const QuestionDisplay = ({
 
             {shouldShowExplanation && (
               <div className="explanation">
-                <h1>Explanation</h1>
+                <hr />
+                <h1 className="font-bold text-xl">Explanation</h1>
                 {parse(exam?.explanation)}
               </div>
             )}

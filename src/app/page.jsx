@@ -5,21 +5,14 @@ import { UserContext } from "./context/User";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { CardContent } from "@mui/material";
 import { getQuestionsCount, getQuizzesUser } from "./functions/quizzes";
-// import CardComponent from "./components/CardComponent";
 const CardComponent = dynamic(() => import("./components/CardComponent"));
 const icons = {
-  BarChart: dynamic(() =>
-    import("./generate-quiz/IconsSVG").then((mod) => mod.BarChart)
-  ),
   BookIcon: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.BookIcon)
   ),
   CheckIcon: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.CheckIcon)
   ),
-  // LineChart: dynamic(() =>
-  //   import("./generate-quiz/IconsSVG").then((mod) => mod.LineChart)
-  // ),
   PieChart: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.PieChart)
   ),
@@ -120,22 +113,22 @@ export default function Home() {
         </header>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <CardComponent
-            title="Total Exams"
+            title="Total Questions"
             value={count}
             Icon={icons.BookIcon}
-            description="Exams scheduled this semester"
+            description="Questions scheduled this semester"
           />
           <CardComponent
-            title="Success Exams"
+            title="Success Questions"
             value={success}
             Icon={icons.CheckIcon}
-            description="Exams completed so far"
+            description="Questions completed so far"
           />
           <CardComponent
-            title="Faild Exams"
+            title="Faild Questions"
             value={count - success}
             Icon={icons.BookIcon}
-            description="Exams completed so far"
+            description="Questions completed so far"
           />
         </section>
         <h1 className="block text-2xl font-bold">Important Statistics</h1>
@@ -160,22 +153,6 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          {/* <Card>
-            <CardHeader>
-              <CardBody>Grade Trends Over Time</CardBody>
-            </CardHeader>
-            <CardContent>
-              <icons.LineChart className="aspect-[4/3]" />
-            </CardContent>
-          </Card> */}
-          {/* <Card>
-            <CardHeader>
-              <CardBody>Performance by Subject</CardBody>
-            </CardHeader>
-            <CardContent>
-              <icons.BarChart className="aspect-[4/3]" />
-            </CardContent>
-          </Card> */}
         </section>
       </main>
     </div>
