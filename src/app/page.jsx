@@ -22,8 +22,6 @@ export default function Home() {
   const [state] = useContext(UserContext);
   const [count, setCount] = useState(0);
   const [success, setSuccess] = useState(0);
-  const [recallsSuccess, setRecallsSuccess] = useState(0);
-  const [recallsFaild, setRecallsFaild] = useState(0);
   const [questionsCount, setQuestionsCount] = useState(0);
 
   useEffect(() => {
@@ -40,22 +38,6 @@ export default function Home() {
         setSuccess(
           filteredSuccessQuestions ? filteredSuccessQuestions.length : 0
         );
-        const recallsQuestionsSuccess = quizzes[0]?.question.filter(
-          (question) =>
-            question?.questionId?.sources[0] == "Recalls" &&
-            question.value == "true"
-        );
-        setRecallsSuccess(
-          recallsQuestionsSuccess ? recallsQuestionsSuccess.length : 0
-        );
-        const recallsQuestionsFaild = quizzes[0]?.question.filter(
-          (question) =>
-            question?.questionId?.sources[0] == "Recalls" &&
-            question.value == "false"
-        );
-        setRecallsFaild(
-          recallsQuestionsFaild ? recallsQuestionsFaild.length : 0
-        );
         const res = await getQuestionsCount().then((res) =>
           setQuestionsCount(res)
         );
@@ -71,14 +53,14 @@ export default function Home() {
     {
       id: "success",
       label: "success",
-      value: recallsSuccess,
+      value: success,
       color: "hsl(124, 70%, 50%)",
     },
     {
       id: "faild",
       label: "faild",
-      value: recallsFaild,
-      color: "hsl(43, 70%, 50%)",
+      value: count - success,
+      color: "#333",
     },
   ];
   const questions = [
@@ -92,7 +74,7 @@ export default function Home() {
       id: "answered questions",
       label: "Answered Questions",
       value: count,
-      color: "hsl(124, 70%, 50%)",
+      color: "hsla(209, 100%, 50%, 1)",
     },
   ];
   return (
