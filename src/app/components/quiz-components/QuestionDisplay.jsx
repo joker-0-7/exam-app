@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { EyeClose, EyeOpen } from "../../../../public/assets";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ExamContext } from "@/app/generate-quiz/_context";
 import { addQuizToUser } from "@/app/functions/quizzes";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,7 @@ const QuestionDisplay = ({
   formatTime,
   time,
   exams,
+  setAnswersQuiz,
   checkedAns,
 }) => {
   const router = useRouter();
@@ -37,10 +38,20 @@ const QuestionDisplay = ({
   const { confirm } = Modal;
   const showConfirm = () => {
     const okFun = async () => {
-      await addQuizToUser(answersQuiz)
+      const updatedAnswersQuiz = { ...answersQuiz };
+      exams.forEach((exam) => {
+        if (!updatedAnswersQuiz.hasOwnProperty(exam._id)) {
+          updatedAnswersQuiz[exam._id] = false;
+        }
+      });
+
+      setAnswersQuiz(updatedAnswersQuiz);
+
+      await addQuizToUser(updatedAnswersQuiz)
         .then((res) => setIndex(exams.length + 1))
         .catch((err) => console.log(err));
     };
+
     confirm({
       title: "Do you want to Exit This Exam",
       icon: <ExclamationCircleFilled />,
@@ -54,6 +65,9 @@ const QuestionDisplay = ({
       },
     });
   };
+  useEffect(() => {
+    console.log(answersQuiz);
+  }, [answersQuiz]);
   const isChecked = (questionId, answer) => {
     const checkedAnsBefore = handleAns.find((e) => e.quizId === questionId);
     return checkedAnsBefore ? checkedAnsBefore.userAnswer === answer : null;

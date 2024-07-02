@@ -162,6 +162,7 @@ function Page() {
             />
             <QuestionDisplay
               answersQuiz={answersQuiz}
+              setAnswersQuiz= {setAnswersQuiz}
               exam={exams[index]}
               examContext={exam}
               examsCount={exams.length}

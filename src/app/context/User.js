@@ -51,6 +51,11 @@ const UserProvider = ({ children }) => {
       return Promise.reject(error);
     }
   );
+  useEffect(() => {
+    if (state.token && pathName.split("/").includes("login")) {
+      router.push("/");
+    }
+  }, [state]);
   return client ? (
     <UserContext.Provider value={[state, setState]}>
       {children}

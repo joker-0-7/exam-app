@@ -12,11 +12,8 @@ import { UpdateIcon } from "../../../public/assets/Icons";
 
 function TableComponent({ data, page, handleUpdate, handleDelete }) {
   return (
-    <div
-      className="border rounded-lg w-full overflow-y-scroll"
-      style={{ height: "calc(100vh - 50px)" }}
-    >
-      <div className="relative w-full overflow-auto">
+    <div className="border rounded-lg w-full">
+      <div className="relative w-full">
         <Table>
           <TableHeader>
             <TableRow>

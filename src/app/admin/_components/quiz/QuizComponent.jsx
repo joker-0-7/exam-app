@@ -6,15 +6,16 @@ import "react-quill/dist/quill.snow.css";
 import Subjects from "./Subjects";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import PastPapers from "./PastPapers";
 
 function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
   );
-  const addAnswers = () => {
-    setQuizzes({ ...quiz, answers: [...quiz.answers, ""] });
-  };
+  // const addAnswers = () => {
+  //   setQuizzes({ ...quiz, answers: [...quiz.answers, ""] });
+  // };
 
   return (
     <div className="box mx-auto container">
@@ -23,6 +24,9 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
           <Sources setQuizzes={setQuizzes} quiz={quiz} />
         </div>
         <div className="subjects">
+          <PastPapers setQuizzes={setQuizzes} quiz={quiz} />
+        </div>
+        <div className="past-papers">
           <Subjects setQuizzes={setQuizzes} quiz={quiz} />
         </div>
       </div>

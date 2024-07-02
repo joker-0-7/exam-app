@@ -8,7 +8,7 @@ export const addQuizzes = async (quizzes) => {
     console.log(error);
   }
 };
-
+// Get Questions After Pagenation
 export const getQuizzes = async (current) => {
   try {
     const rus = await axios.get(
@@ -58,8 +58,9 @@ export const getQuizzesUser = async (token) => {
   //   console.log(error);
   // }
   try {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API}/quiz/quizzes/`, {
       method: "GET",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
         Authorization: `${token}`,
