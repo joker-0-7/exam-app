@@ -3,23 +3,21 @@ import React, { useEffect, useState } from "react";
 
 const PastPapers = ({ quiz, setQuizzes }) => {
   const [data, setData] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const handleCheckboxChange = (option) => {
-    const isSelected = quiz.subjects.includes(option);
+    const isSelected = quiz.pastPapers.includes(option);
     if (isSelected) {
       setQuizzes({
         ...quiz,
-        subjects: quiz.subjects.filter((item) => item !== option),
+        pastPapers: quiz.pastPapers.filter((item) => item !== option),
       });
     } else {
-      setQuizzes({ ...quiz, subjects: [...quiz.subjects, option] });
+      setQuizzes({ ...quiz, pastPapers: [...quiz.pastPapers, option] });
     }
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const pastPapers = await getPastPaper();
-        console.log(pastPapers);
         setData(pastPapers);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -29,26 +27,20 @@ const PastPapers = ({ quiz, setQuizzes }) => {
   }, []);
   return (
     <div className="dropdown-checkbox">
-      <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)}>
-        Select Past Papers
-      </button>
-      {isOpen && (
-        <div className="dropdown-content">
-          {data.map((option, index) => (
-            <div key={index}>
-              <label className="checkbox-label">
-                <input
-                  type="radio"
-                  name="past-papers"
-                  checked={quiz.pastPapers == option.quizName}
-                  onChange={() => handleCheckboxChange(option.quizName)}
-                />
-                {option.quizName}
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="dropdown-content grid grid-cols-1 sm:grid-cols-2">
+        {data.map((option, index) => (
+          <div key={index}>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={quiz["pastPapers"].includes(option.name)}
+                onChange={() => handleCheckboxChange(option.name)}
+              />
+              {option.name}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

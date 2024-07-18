@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 const Subjects = ({ quiz, setQuizzes }) => {
   const [data, setData] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const handleCheckboxChange = (option) => {
     const isSelected = quiz.subjects.includes(option);
     if (isSelected) {
@@ -28,25 +27,20 @@ const Subjects = ({ quiz, setQuizzes }) => {
   }, []);
   return (
     <div className="dropdown-checkbox">
-      <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)}>
-        Select Subjects
-      </button>
-      {isOpen && (
-        <div className="dropdown-content">
-          {data.map((option, index) => (
-            <div key={index}>
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={quiz.subjects.includes(option.name)}
-                  onChange={() => handleCheckboxChange(option.name)}
-                />
-                {option.name}
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="dropdown-content grid grid-cols-1 sm:grid-cols-2">
+        {data.map((option, index) => (
+          <div key={index}>
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={quiz.subjects.includes(option.name)}
+                onChange={() => handleCheckboxChange(option.name)}
+              />
+              {option.name}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

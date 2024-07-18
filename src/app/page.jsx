@@ -16,6 +16,9 @@ const icons = {
   PieChart: dynamic(() =>
     import("./generate-quiz/IconsSVG").then((mod) => mod.PieChart)
   ),
+  Percent: dynamic(() =>
+    import("./generate-quiz/IconsSVG").then((mod) => mod.Percent)
+  ),
 };
 
 export default function Home() {
@@ -51,30 +54,29 @@ export default function Home() {
 
   const data = [
     {
-      id: "success",
-      label: "success",
+      id: "Correct",
+      label: "Correct",
       value: success,
-      color: "hsl(124, 70%, 50%)",
     },
     {
-      id: "faild",
-      label: "faild",
+      id: "Incorrect",
+      label: "Incorrect",
       value: count - success,
-      color: "#333",
     },
   ];
   const questions = [
     {
-      id: "total question",
-      label: "Total Questions",
-      value: questionsCount,
-      color: "hsl(43, 70%, 50%)",
+      id: "Remaining",
+      label: "Remaining",
+      value: questionsCount - count,
+      color: "hsla(209, 100%, 50%, 1)",
+      background: "hsla(209, 100%, 50%, 1)",
     },
     {
-      id: "answered questions",
-      label: "Answered Questions",
+      id: "Taken",
+      label: "Taken",
       value: count,
-      color: "hsla(209, 100%, 50%, 1)",
+      color: "hsl(282, 70%, 50%)",
     },
   ];
   return (
@@ -86,7 +88,8 @@ export default function Home() {
         <header className="flex flex-col gap-2">
           {state?.user && (
             <h1 className="text-3xl font-bold">
-              Welcome, {state?.user?.firstName}
+              Welcome,{" "}
+              <span style={{ color: "#e5482e" }}>{state?.user?.firstName}</span>
             </h1>
           )}
           <p className="text-gray-500 dark:text-gray-400">
@@ -95,39 +98,31 @@ export default function Home() {
         </header>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <CardComponent
-            title="Total Questions"
+            title="QUESTIONS TAKEN"
             value={count}
             Icon={icons.BookIcon}
-            description="Questions scheduled this semester"
+            description="total number of answered questions"
           />
           <CardComponent
-            title="Success Questions"
+            title="QUESTIONS CORRECT"
             value={success}
             Icon={icons.CheckIcon}
-            description="Questions completed so far"
+            description="total number of correctly answered questions"
           />
           <CardComponent
-            title="Faild Questions"
-            value={count - success}
-            Icon={icons.BookIcon}
-            description="Questions completed so far"
+            title="PERCENT CORRECT"
+            // value={count - success}
+            value={Math.ceil((success / count) * 100) + "%" || 0}
+            Icon={icons.Percent}
+            description="the percentage of correctly answered questions"
           />
         </section>
-        <h1 className="block text-2xl font-bold">Important Statistics</h1>
-        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto">
           <Card>
             <CardHeader>
-              <CardBody>Test Score Distribution</CardBody>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-[4/3]">
-                <icons.PieChart data={data} />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardBody>Test Score Distribution</CardBody>
+              <CardBody className="text-center">
+                Questions Taken / Questions Remaining
+              </CardBody>
             </CardHeader>
             <CardContent>
               <div className="aspect-[4/3]">
@@ -135,7 +130,20 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader>
+              <CardBody className="text-center">
+                Questions Correct / Questions Incorrect
+              </CardBody>
+            </CardHeader>
+            <CardContent>
+              <div className="aspect-[4/3]">
+                <icons.PieChart data={data} />
+              </div>
+            </CardContent>
+          </Card>
         </section>
+        {/* </div> */}
       </main>
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-import ButtonComponent from "@/app/utils/Button";
+// import ButtonComponent from "@/app/utils/Button";
 import { Input } from "@/components/ui/input";
 import Sources from "./Sources";
 import "react-quill/dist/quill.snow.css";
@@ -19,15 +19,15 @@ function QuizComponent({ setQuizzes, handleChangeAnswer, quiz, uploadFile }) {
 
   return (
     <div className="box mx-auto container">
-      <div className="heading grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+      <div className="heading grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div className="sources">
           <Sources setQuizzes={setQuizzes} quiz={quiz} />
         </div>
         <div className="subjects">
-          <PastPapers setQuizzes={setQuizzes} quiz={quiz} />
+          <Subjects setQuizzes={setQuizzes} quiz={quiz} />
         </div>
         <div className="past-papers">
-          <Subjects setQuizzes={setQuizzes} quiz={quiz} />
+          <PastPapers setQuizzes={setQuizzes} quiz={quiz} />
         </div>
       </div>
       <div className="content">

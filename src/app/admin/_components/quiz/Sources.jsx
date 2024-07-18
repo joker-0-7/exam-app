@@ -2,7 +2,6 @@ import { getSources } from "@/app/functions/users";
 import React, { useEffect, useState } from "react";
 
 const Sources = ({ setQuizzes, quiz }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -28,26 +27,21 @@ const Sources = ({ setQuizzes, quiz }) => {
     console.log(quiz.sources);
   };
   return (
-    <div className="dropdown-checkbox">
-      <button className="dropdown-toggle" onClick={() => setIsOpen(!isOpen)}>
-        Select Sources
-      </button>
-      {isOpen && (
-        <div className="dropdown-content">
-          {data.map((option, index) => (
-            <div key={index} className="">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={quiz["sources"].includes(option.name)}
-                  onChange={() => handleCheckboxChange(option.name)}
-                />
-                {option.name}
-              </label>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="dropdown-checkbox grid grid-cols-1 sm:grid-cols-2">
+      <div className="dropdown-content">
+        {data.map((option, index) => (
+          <div key={index} className="">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={quiz["sources"].includes(option.name)}
+                onChange={() => handleCheckboxChange(option.name)}
+              />
+              {option.name}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

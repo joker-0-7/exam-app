@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { UserContext } from "../context/User";
+import Image from "next/image";
 
 const pages = [
   { id: 1, name: "Generate Quiz", link: "/generate-quiz" },
@@ -47,12 +48,10 @@ function ResponsiveAppBar() {
       <AppBar position="static" sx={{ backgroundColor: "#020c2b" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -63,7 +62,16 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              <Link href="/">
+                {/* <img
+                  src="/assets/Logo.png"
+                  width={130}
+                  height={30}
+                  alt="logo"
+                  className="w-28 h-14"
+                /> */}
+                Logo
+              </Link>
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -109,7 +117,6 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -121,7 +128,7 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              <Link href="/">LOGO</Link>
             </Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

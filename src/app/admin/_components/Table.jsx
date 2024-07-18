@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-function TableComponent({ data, handleDelete, handleUpdate }) {
+function TableComponent({ data, handleDelete }) {
   return (
     <div className="subjects">
       <div className="overflow-x-auto container mx-auto flex align-middle items-center min-h-96 text-center justify-center">

@@ -52,7 +52,7 @@ const UserProvider = ({ children }) => {
     }
   );
   useEffect(() => {
-    if (state.token && pathName.split("/").includes("login")) {
+    if (state?.token && pathName.split("/").includes("login")) {
       router.push("/");
     }
   }, [state]);
