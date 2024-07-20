@@ -49,7 +49,7 @@ function Page() {
     formData.append("subjects", JSON.stringify(quizzes.subjects));
     formData.append("pastPapers", JSON.stringify(quizzes.pastPapers));
     await addQuizzes(formData).then((res) => {
-      // router.push("/admin/quizzes");
+      router.push("/admin/quizzes");
       // setQuizzes({
       //   sources: [""],
       //   question: "",
