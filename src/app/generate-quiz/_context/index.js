@@ -17,6 +17,7 @@ const ExamProvider = ({ children }) => {
             adv: false,
             count: 0,
             time: false,
+            pastPapers: [],
           };
     }
     return {
@@ -27,6 +28,7 @@ const ExamProvider = ({ children }) => {
       adv: false,
       count: 0,
       time: false,
+      pastPapers: [],
     };
   });
 

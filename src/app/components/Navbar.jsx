@@ -63,14 +63,12 @@ function ResponsiveAppBar() {
               }}
             >
               <Link href="/">
-                {/* <img
+                <Image
                   src="/assets/Logo.png"
-                  width={130}
-                  height={30}
+                  width={160}
+                  height={60}
                   alt="logo"
-                  className="w-28 h-14"
-                /> */}
-                Logo
+                />
               </Link>
             </Typography>
 

@@ -51,6 +51,7 @@ export default function Home() {
 
     fetchData();
   }, []);
+  const date = new Date(state.user.activate);
 
   const data = [
     {
@@ -95,6 +96,9 @@ export default function Home() {
           <p className="text-gray-500 dark:text-gray-400">
             Explore your academic progress and stay informed.
           </p>
+          <p className="text-gray-500 dark:text-gray-400">
+            Expiration Date: {date.toLocaleString()}
+          </p>
         </header>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <CardComponent
@@ -111,13 +115,12 @@ export default function Home() {
           />
           <CardComponent
             title="PERCENT CORRECT"
-            // value={count - success}
             value={Math.ceil((success / count) * 100) + "%" || 0}
             Icon={icons.Percent}
             description="the percentage of correctly answered questions"
           />
         </section>
-        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto">
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 md:w-3/4 mx-aut max-sm:w-full">
           <Card>
             <CardHeader>
               <CardBody className="text-center">
@@ -143,7 +146,6 @@ export default function Home() {
             </CardContent>
           </Card>
         </section>
-        {/* </div> */}
       </main>
     </div>
   );

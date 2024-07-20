@@ -13,6 +13,7 @@ const PastPapers = ({ quiz, setQuizzes }) => {
     } else {
       setQuizzes({ ...quiz, pastPapers: [...quiz.pastPapers, option] });
     }
+    console.log(quiz);
   };
   useEffect(() => {
     const fetchData = async () => {

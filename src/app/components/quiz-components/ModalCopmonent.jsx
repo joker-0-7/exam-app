@@ -2,9 +2,10 @@ import PastPapers from "@/app/admin/_components/quiz/PastPapers";
 import Sources from "@/app/admin/_components/quiz/Sources";
 import Subjects from "@/app/admin/_components/quiz/Subjects";
 import React from "react";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 // reactstrap components
-import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+
 
 function Example({ setModalOpen, modalOpen, data, quizzes, setQuizzes }) {
   return (

@@ -49,9 +49,9 @@ export default function Component() {
         console.error("Error fetching subjects:", error);
       });
   }, []);
-  useEffect(()=>{
-    setExam({...exam, questions: [] })
-  },[])
+  useEffect(() => {
+    setExam({ ...exam, questions: [] });
+  }, []);
   const onChange = (e, change) => {
     const selectedSource = e;
     if (!exam[change].includes(selectedSource)) {
@@ -74,12 +74,13 @@ export default function Component() {
         console.log(Date.now());
       })
       .catch((err) => console.log(err));
-    setDisabled(true);
-  };
-  const generatePastPapers = async () => {
-    setDisabled(true);
-    const data = await getPastPapers(pastPaperId).then((res) => {
-      setExam({ ...exam, questions: res.data });
+      setDisabled(true);
+    };
+    const generatePastPapers = async () => {
+      setDisabled(true);
+      const data = await getPastPapers(pastPaperId).then((res) => {
+      console.log(res);
+      setExam({ ...exam, questions: res });
       router.push("/generate-quiz/quiz/test");
     });
     setDisabled(true);
@@ -111,8 +112,8 @@ export default function Component() {
                     <PastPapersChose
                       key={i}
                       data={s}
-                      checked={s._id === pastPaperId}
-                      onChange={() => setPastPaperId(s._id)}
+                      checked={s.name === pastPaperId}
+                      onChange={() => setPastPaperId(s.name)}
                     />
                   ))}
                 </div>
@@ -306,7 +307,7 @@ export default function Component() {
               <Button
                 className="w-full max-w-[200px] bg-blue-500 hover:bg-blue-600 text-white"
                 type="primary"
-                disabled={!exam.sources.length > 0 || !exam.subjects.length > 0}
+                // disabled={!exam.sources.length > 0 || !exam.subjects.length > 0 }
                 onClick={() => {
                   exam.mode !== "quiz" ? generate() : generatePastPapers();
                 }}

@@ -2,17 +2,17 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 function PastPapersChose({ data, checked, onChange }) {
-  console.log(checked);
+
   return (
-    <RadioGroup defaultValue={data.quizName}>
+    <RadioGroup defaultValue={data.name}>
       <div className="flex items-center space-x-2">
         <RadioGroupItem
-          value={data.quizName}
-          id={data.quizName}
+          value={data.name}
+          id={data.name}
           checked={checked}
           onClick={onChange}
         />
-        <Label htmlFor={data.quizName}>{data.quizName}</Label>
+        <Label htmlFor={data.name}>{data.name}</Label>
       </div>
     </RadioGroup>
   );
