@@ -110,7 +110,6 @@ function ResponsiveAppBar() {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -126,7 +125,14 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              <Link href="/">LOGO</Link>
+              <Link href="/">
+                <Image
+                  src="/assets/Logo.png"
+                  width={160}
+                  height={60}
+                  alt="logo"
+                />
+              </Link>
             </Typography>
             <Box
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}

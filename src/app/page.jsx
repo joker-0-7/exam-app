@@ -34,9 +34,10 @@ export default function Home() {
         const filteredAllQuestions = quizzes[0]?.question.filter(
           (question) => question.questionId !== null
         );
+        console.log(quizzes);
         setCount(filteredAllQuestions ? filteredAllQuestions.length : 0);
         const filteredSuccessQuestions = quizzes[0]?.question.filter(
-          (question) => question.value == "true"
+          (question) => question.value == "true" && question.questionId !== null
         );
         setSuccess(
           filteredSuccessQuestions ? filteredSuccessQuestions.length : 0
@@ -115,7 +116,9 @@ export default function Home() {
           />
           <CardComponent
             title="PERCENT CORRECT"
-            value={Math.ceil((success / count) * 100) + "%" || 0}
+            value={
+              success != 0 ? Math.ceil((success / count) * 100) + "%" : 0 + "%"
+            }
             Icon={icons.Percent}
             description="the percentage of correctly answered questions"
           />
