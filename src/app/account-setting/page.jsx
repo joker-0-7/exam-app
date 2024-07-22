@@ -38,6 +38,7 @@ function Page() {
       return;
     }
   };
+  const date = new Date(state.user.activate);
   return (
     <div className="settings h-screen flex justify-center items-center">
       <div className="form-user container mx-auto">
@@ -60,6 +61,11 @@ function Page() {
                 <Inputs
                   title="Last Name"
                   value={state?.user?.lastName}
+                  disabled={true}
+                />
+                <Inputs
+                  title="Expiration Date"
+                  value={date.toLocaleDateString()}
                   disabled={true}
                 />
                 <Inputs

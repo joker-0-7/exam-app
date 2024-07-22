@@ -97,9 +97,6 @@ export default function Home() {
           <p className="text-gray-500 dark:text-gray-400">
             Explore your academic progress and stay informed.
           </p>
-          <p className="text-gray-500 dark:text-gray-400">
-            Expiration Date: {date.toLocaleString()}
-          </p>
         </header>
         <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <CardComponent
