@@ -60,7 +60,7 @@ function Page({ params }) {
     formdata.append("correct", quizzes.correct);
     formdata.append("explanation", quizzes.explanation);
     formdata.append("subjects", JSON.stringify(quizzes.subjects));
-    formData.append("pastPapers", JSON.stringify(quizzes.pastPapers));
+    formdata.append("pastPapers", JSON.stringify(quizzes.pastPapers));
     const data = await updateQuestion(params.id, formdata).then((res) =>
       router.push("/admin/quizzes")
     );
